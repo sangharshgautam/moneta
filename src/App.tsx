@@ -4,7 +4,6 @@ import {createBrowserRouter, defer, Outlet, RouterProvider} from "react-router-d
 import UnAuthenticated from "./components/UnAuthenticated";
 import ProtectedRoute from "./ProtectedRoute";
 import GoogleApi from "./services/GoogleApi";
-import Dashboard from "./components/modules/dashboard/Dashboard";
 import AddAgency from "./components/modules/agency/AddAgency";
 import EditAgencyPage from "./pages/agency/EditAgencyPage";
 import AddContract from "./components/modules/contract/AddContract";
@@ -16,7 +15,7 @@ import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
 import ViewContractPage from "./pages/contract/ViewContractPage";
 import EditTimesheetPage from "./pages/timesheet/EditTimesheetPage";
 import ViewTimesheetPage from "./pages/timesheet/ViewTimesheetPage";
-import {AgenciesPage, ContractsPage, TimesheetsPage} from "./pages/LazyOutlet";
+import {AgenciesPage, ContractsPage, Dashboard, TimesheetsPage} from "./pages/LazyOutlet";
 import {AxiosResponse} from "axios";
 
 const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
@@ -62,8 +61,18 @@ function App() {
                     path: 'secure/*',
                     element: <ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>,
                     children: [
-                        {index: true, element: <Dashboard />},
-                        {path: 'dashboard', element: <Dashboard/>},
+                        {
+                            index: true, element: <Dashboard />,
+                            loader: async () => {
+                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            }
+                        },
+                        {
+                            path: 'dashboard', element: <Dashboard/>,
+                            loader: async () => {
+                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            }
+                        },
                         {
                             path: 'agency',
                             children: [

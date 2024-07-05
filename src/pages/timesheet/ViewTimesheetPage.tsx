@@ -1,12 +1,21 @@
 import React from 'react';
-import ViewItemSection from "../ViewItemSection";
+import SalarySlip from "./SalarySlip";
+import ViewTimesheetSection from "./ViewTimesheetSection";
+import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
+import {Await, useLoaderData} from "react-router-dom";
 
 const ViewTimesheetPage = () => {
-    return <>
-        <ViewItemSection />
+    return <React.Suspense fallback={<OutletContentLoading resource="agency" />}>
         {/*
         // @ts-ignore */}
-        {/*<React.Suspense fallback={<OutletContentLoading resource="timesheets" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError />}>{(listResponse) => (<Timesheets records={listResponse.data} />)}</Await></React.Suspense>*/}
-    </>
+        <Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (
+            <>
+                <ViewTimesheetSection />
+                <SalarySlip></SalarySlip>
+            </>
+
+        )}
+        </Await>
+    </React.Suspense>
 }
 export default ViewTimesheetPage;

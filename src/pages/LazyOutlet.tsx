@@ -4,6 +4,7 @@ import {Await, useLoaderData} from "react-router-dom";
 import Agencies from "../components/modules/agency/Agencies";
 import Contracts from "../components/modules/contract/Contracts";
 import Timesheets from "../components/modules/timesheet/Timesheets";
+import CashFlow from "../components/modules/dashboard/CashFlow";
 
 export const OutletContentError = () => <h1>Error..</h1>
 export const OutletContentLoading = (props: {resource: string}) => <Dimmer active><Loader inverted>Loading {props.resource}</Loader></Dimmer>
@@ -18,6 +19,10 @@ export const ContractsPage = () => {
 export const TimesheetsPage = () => {
     // @ts-ignore
     return <React.Suspense fallback={<OutletContentLoading resource="timesheets" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Timesheets records={listResponse.data} />)}</Await></React.Suspense>
+}
+export const Dashboard = () => {
+    // @ts-ignore
+    return <React.Suspense fallback={<OutletContentLoading resource="timesheets" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<CashFlow records={listResponse.data} />)}</Await></React.Suspense>
 }
 
 
