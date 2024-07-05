@@ -5,7 +5,7 @@ import GoogleOAuth from "./GoogleOAuth";
 
 const UnAuthenticated = (props: {user: TokenResponse, setUser: (user: TokenResponse) => void}) => {
     if (props.user) {
-        return <Navigate to='/muneem/secure' replace />;
+        return <Navigate to='secure' replace />;
     }
 
     return (

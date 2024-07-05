@@ -1,4 +1,4 @@
-[![Node.js CI](https://github.com/sangharshgautam/muneem/actions/workflows/node.js.yml/badge.svg)](https://github.com/sangharshgautam/muneem/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/sangharshgautam/moneta/actions/workflows/node.js.yml/badge.svg)](https://github.com/sangharshgautam/moneta/actions/workflows/node.js.yml)
 
 # Getting Started with Create React App
 

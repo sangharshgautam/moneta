@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
     Button,
     Header,
     Icon,
-    Label,
     Segment,
     Table,
     TableBody,
@@ -17,36 +16,23 @@ import {NavLink} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Agency} from "../common/Models";
 
-const Agencies = () => {
-    const [progress, setProgress] = useState(0)
-    const [records, setRecords] = useState<Agency[]>([])
-    const loadAgencies =  () => {
-        MonetaApi.list<Agency[]>('agency', setProgress).then(
-            result => setRecords(result.data)
-        )
-    }
-    useEffect(() => {
-        loadAgencies()
-    }, [])
-    const deleteAgency = (id: string | undefined) => {
+const Agencies = (props: {records: Agency[]}) => {
+    const handleDelete = (id: string | number | undefined) => {
         if(id){
-            MonetaApi.delete<string>('agency', id, setProgress).then(
+            MonetaApi.delete<string>('agency', id).then(
                 result => {
                     console.log(result)
-                    loadAgencies()
+                    // loadRecords()
                 }
             )
         }
     }
     return <Segment basic>
-        <Header as='h3'>Agency</Header>
-        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
-            <div className="bar"></div>
-            <div className="label">Loading agency</div>
-        </div>}
-        {progress === 100 && <Table celled>
+        <Header as='h3'>Agencies</Header>
+        <Table celled>
             <TableHeader>
                 <TableRow>
+                    <TableHeaderCell>Id</TableHeaderCell>
                     <TableHeaderCell>Name</TableHeaderCell>
                     <TableHeaderCell>Contact</TableHeaderCell>
                     <TableHeaderCell>Website</TableHeaderCell>
@@ -55,29 +41,28 @@ const Agencies = () => {
             </TableHeader>
 
             <TableBody>
-                {records.map(record => <TableRow key={record.id}>
+                {props.records.map(record => <TableRow key={record.id}>
+                    <TableCell key="id">{record.id}</TableCell>
                     <TableCell key="name">
-                        {/*
-                        // @ts-ignore */}
-                        <Label ribbon={record.id === "1"}>{record.name}</Label>
+                        <NavLink to={`${record.id}`}>{record.name}</NavLink>
                     </TableCell>
                     <TableCell key="contact">{record.contact}</TableCell>
                     <TableCell key="website">{record.website}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
-                        <Button size='small' negative icon="trash" onClick={() => deleteAgency(record.id)}></Button>
+                        <Button as={NavLink} to={`/secure/agency/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
 
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='4'>
+                    <TableHeaderCell colSpan='5'>
                         <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Agency</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>
-        </Table>}
+        </Table>
     </Segment>
 }
 export default Agencies;

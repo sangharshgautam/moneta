@@ -1,14 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
+import {createBrowserRouter, defer, Outlet, RouterProvider} from "react-router-dom";
 import UnAuthenticated from "./components/UnAuthenticated";
 import ProtectedRoute from "./ProtectedRoute";
 import GoogleApi from "./services/GoogleApi";
+import AddAgency from "./components/modules/agency/AddAgency";
+import EditAgencyPage from "./pages/agency/EditAgencyPage";
+import AddContract from "./components/modules/contract/AddContract";
+import ViewAgencyPage from "./pages/agency/ViewAgencyPage";
+import MonetaApi from "./services/MonetaApi";
+import {Agency, Contract, Timesheet} from "./components/modules/common/Models";
+import EditContractPage from "./pages/contract/EditContractPage";
+import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
+import ViewContractPage from "./pages/contract/ViewContractPage";
+import EditTimesheetPage from "./pages/timesheet/EditTimesheetPage";
+import ViewTimesheetPage from "./pages/timesheet/ViewTimesheetPage";
+import {AgenciesPage, ContractsPage, Dashboard, OutletContentError, TimesheetsPage} from "./pages/LazyOutlet";
+import {AxiosResponse} from "axios";
+import Settings from "./components/modules/settings/Settings";
+
+const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
+    console.log(`${resource} Loader`)
+    return MonetaApi.get<T>(resource, id)
+}
+
+const loadResourceList = async <T,>(resource: string) => {
+    console.log(`${resource} List Loader`)
+    return MonetaApi.list<T>(resource)
+}
 
 function App() {
+
     const [user, setUser] = useState<any | null>(null);
     const [profile, setProfile] = useState<any | null>(null);
-
     useEffect(
         () => {
             if (user) {
@@ -21,17 +45,184 @@ function App() {
         },
         [ user ]
     );
-  return (
-      <BrowserRouter>
-          <Routes>
-              <Route path="/" element={<h1>Muneem</h1>} />
-              <Route path="/muneem" element={<Outlet/>}>
-                  <Route index element={<UnAuthenticated user={user} setUser={setUser}/>} />
-                  <Route path="secure/*" element={<ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>} />
-              </Route>
-        </Routes>
-      </BrowserRouter>
-  );
+    const router = createBrowserRouter([
+        {
+            element: <h1>Moneta</h1>,
+            path: "/"
+        },
+        {
+            element: <Outlet/>,
+            path: "/",
+            children: [
+                {
+                    index: true,
+                    element: <UnAuthenticated user={user} setUser={setUser}/>
+                },
+                {
+                    path: 'secure/*',
+                    element: <ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>,
+                    handle: {
+                        crumb: () => "home"
+                    },
+                    errorElement: <OutletContentError/>,
+                    children: [
+                        {
+                            index: true, element: <Dashboard />,
+                            loader: async () => {
+                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            },
+                            handle: {
+                                crumb: () => "dashboard"
+                            }
+                        },
+                        {
+                            path: 'dashboard', element: <Dashboard/>,
+                            loader: async () => {
+                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            },
+                            handle: {
+                                crumb: () => "dashboard"
+                            }
+                        },
+                        {
+                            path: 'agency',
+                            handle: {
+                                crumb: () => "agency"
+                            },
+                            children: [
+                                {
+                                    index: true, element: <AgenciesPage/>,
+                                    loader: async () =>  {
+                                        return defer({listResponse: loadResourceList<Agency[]>('agency')})
+                                    }
+                                },
+                                {
+                                    path: 'add', element: <AddAgency/>,
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
+                                {
+                                    path: ':id/edit', element: <EditAgencyPage/>,
+                                    loader: async ({ params }) => {
+                                        return defer({itemResponse: loadResource<Agency>('agency', params.id as string)})
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
+                                    }
+                                },
+                                {
+                                    path: ':agencyId/add', element: <AddContract/>},
+                                {
+                                    path: ':id', element: <ViewAgencyPage/>,
+                                    loader: async ({ params }) => {
+                                        const id = params.id as string
+                                        const agencyLoader = loadResource<Agency>('agency', id)
+                                        const contractsLoader = loadResourceList<Contract[]>(`agency/${id}/contract`);
+                                        return defer({itemResponse: agencyLoader, listResponse: contractsLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "view"
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            path: 'contract',
+                            handle: {
+                                crumb: () => "contract"
+                            },
+                            children: [
+                                {
+                                    index: true, element: <ContractsPage/>,
+                                    loader: async () => {
+                                        return defer({listResponse: loadResourceList<Contract[]>('contract')})
+                                    }
+                                },
+                                {path: 'add', element: <AddContract/>},
+                                {
+                                    path: ':id/edit', element: <EditContractPage/>,
+                                    loader: async ({ params }) => {
+                                        return defer({itemResponse: loadResource<Agency>('contract', params.id as string)})
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
+                                    }
+                                },
+                                {
+                                    path: ':contractId/add', element: <AddContract/>,
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
+                                {
+                                    path: ':id', element: <ViewContractPage/>,
+                                    loader: async ({ params}) => {
+                                        const id = params.id as string
+                                        const contractLoader = loadResource<Contract>('contract', id)
+                                        const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
+                                        return defer({itemResponse: contractLoader, listResponse: timesheetsLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            path: 'timesheet',
+                            handle: {
+                                crumb: () => "timesheet"
+                            },
+                            children: [
+                                {
+                                    index: true, element: <TimesheetsPage />,
+                                    loader: async () => {
+                                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                                    }
+                                },
+                                {
+                                    path: 'add', element: <AddTimesheet/>,
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
+                                {
+                                    path: ':id/edit', element: <EditTimesheetPage/>,
+                                    loader: async ({ params }) => {
+                                        return defer({itemResponse: loadResource<Agency>('timesheet', params.id as string)})
+                                    }
+                                },
+                                {
+                                    path: ':id', element: <ViewTimesheetPage/>,
+                                    loader: async ({ params}) => {
+                                        const id = params.id as string
+                                        const timesheetLoader = loadResource<Contract>('timesheet', id)
+                                        return defer({itemResponse: timesheetLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "view"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            path: 'settings', element: <Settings />,
+                            // loader: async () => {
+                            //     return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            // },
+                            handle: {
+                                crumb: () => "settings"
+                            },
+                        }
+                    ]
+                }
+            ],
+        },
+    ], {
+        basename: '/moneta'
+    });
+    return <RouterProvider router={router} />
 }
 
 export default App;

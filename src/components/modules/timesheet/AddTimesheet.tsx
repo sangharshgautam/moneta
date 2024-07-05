@@ -1,31 +1,33 @@
 import React, {useState} from 'react'
-import {Button, Container, Form, FormField, Header, Input, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {useNavigate} from "react-router-dom";
+import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
+import {useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {Timesheet} from "../common/Models";
+import {NewTimesheet} from "../common/Models";
+import TimesheetForm from "./TimesheetForm";
 
 const AddTimesheet = () => {
-    const [progress, setProgress] = useState(0)
-    const [record, setRecord] = useState<Timesheet>({
-        psrContractId: 'PSR1JP00071991',
+    const routeParams = useParams<{contractId: string}>();
+    const [timesheet, setTimesheet] = useState<NewTimesheet>({
+        contract:{
+          id: Number(routeParams.contractId)
+        },
         startDate: '15/06/2024',
         endDate: '21/06/2024',
-        units: 5,
-        psrId: 'PSR1TS04070707',
+        days: 5,
+        refId: 'PSR1TS04070707',
         status: 'Approved'
     })
-    const navigate = useNavigate()
+    const [progress, setProgress] = useState(100)
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
-        MonetaApi.create<Timesheet>('timesheet', record, setProgress).then(
-            result => {
-                setRecord(result.data);
-                navigate('/muneem/secure/timesheet');
-            }
-
+    const handleSubmit = (timesheetForm: NewTimesheet) => {
+        MonetaApi.create<NewTimesheet>('timesheet', timesheetForm, setProgress).then(
+            result => setTimesheet(result.data)
         )
     }
+    const handleCancel = () => {
+        // navigate(props.parent);
+    }
+
     return   <Segment basic>
         <Header as='h3'>Add Timesheet</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
@@ -40,25 +42,7 @@ const AddTimesheet = () => {
                     recommend reviewing the changes.
                 </p>
             </Message>
-            <Form>
-                <FormField>
-                    <label>Status</label>
-                    <Input placeholder='Status' value={record.status} onChange={(e) => setRecord({...record, status: e.target.value})}/>
-                </FormField>
-                <FormField>
-                    <label>Start Date</label>
-                    <Input type="date" placeholder='Start data for the contract' value={record.startDate} onChange={(e) => setRecord({...record, startDate: e.target.value})}/>
-                </FormField>
-                <FormField>
-                    <label>End Date</label>
-                    <Input type="date" placeholder='End data for the contract' value={record.endDate} onChange={(e) => setRecord({...record, endDate: e.target.value})}/>
-                </FormField>
-                <FormField>
-                    <Input label={{ basic: true, content: 'Days' }} placeholder='No of days' value={record.units} onChange={(e) => setRecord({...record, units: e.target.value as unknown as number})}/>
-                </FormField>
-                <Button type='submit' primary onClick={(e) => handleSubmit(e)}>Submit</Button>
-                <Button>Cancel</Button>
-            </Form>
+            <TimesheetForm timesheet={timesheet} handleSubmit={handleSubmit} handleCancel={handleCancel}></TimesheetForm>
         </Container>
         }
     </Segment>
