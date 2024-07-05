@@ -51,7 +51,7 @@ function App() {
         },
         {
             element: <Outlet/>,
-            path: "/moneta",
+            path: "/",
             children: [
                 {
                     index: true,
@@ -60,21 +60,42 @@ function App() {
                 {
                     path: 'secure/*',
                     element: <ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>,
+                    handle: {
+                        crumb: () => "home"
+                    },
                     children: [
                         {
                             index: true, element: <Dashboard />,
                             loader: async () => {
                                 return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            },
+                            handle: {
+                                crumb: () => "dashboard"
+                            }
+                        },
+                        {
+                            index: true, element: <Dashboard />,
+                            loader: async () => {
+                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            },
+                            handle: {
+                                crumb: () => "dashboard"
                             }
                         },
                         {
                             path: 'dashboard', element: <Dashboard/>,
                             loader: async () => {
                                 return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            },
+                            handle: {
+                                crumb: () => "dashboard"
                             }
                         },
                         {
                             path: 'agency',
+                            handle: {
+                                crumb: () => "agency"
+                            },
                             children: [
                                 {
                                     index: true, element: <AgenciesPage/>,
@@ -83,11 +104,18 @@ function App() {
                                     }
                                 },
                                 {
-                                    path: 'add', element: <AddAgency/>},
+                                    path: 'add', element: <AddAgency/>,
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
                                 {
                                     path: ':id/edit', element: <EditAgencyPage/>,
                                     loader: async ({ params }) => {
                                         return defer({itemResponse: loadResource<Agency>('agency', params.id as string)})
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
                                     }
                                 },
                                 {
@@ -99,12 +127,18 @@ function App() {
                                         const agencyLoader = loadResource<Agency>('agency', id)
                                         const contractsLoader = loadResourceList<Contract[]>(`agency/${id}/contract`);
                                         return defer({itemResponse: agencyLoader, listResponse: contractsLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "view"
                                     }
                                 },
                             ]
                         },
                         {
                             path: 'contract',
+                            handle: {
+                                crumb: () => "contract"
+                            },
                             children: [
                                 {
                                     index: true, element: <ContractsPage/>,
@@ -117,9 +151,17 @@ function App() {
                                     path: ':id/edit', element: <EditContractPage/>,
                                     loader: async ({ params }) => {
                                         return defer({itemResponse: loadResource<Agency>('contract', params.id as string)})
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
                                     }
                                 },
-                                {path: ':contractId/add', element: <AddTimesheet/>},
+                                {
+                                    path: ':contractId/add', element: <AddContract/>,
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
                                 {
                                     path: ':id', element: <ViewContractPage/>,
                                     loader: async ({ params}) => {
@@ -127,12 +169,18 @@ function App() {
                                         const contractLoader = loadResource<Contract>('contract', id)
                                         const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
                                         return defer({itemResponse: contractLoader, listResponse: timesheetsLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
                                     }
                                 },
                             ]
                         },
                         {
                             path: 'timesheet',
+                            handle: {
+                                crumb: () => "timesheet"
+                            },
                             children: [
                                 {
                                     index: true, element: <TimesheetsPage />,
@@ -140,7 +188,12 @@ function App() {
                                         return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
                                     }
                                 },
-                                {path: 'add', element: <AddTimesheet/>},
+                                {
+                                    path: 'add', element: <AddTimesheet/>,
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
                                 {
                                     path: ':id/edit', element: <EditTimesheetPage/>,
                                     loader: async ({ params }) => {
@@ -153,6 +206,9 @@ function App() {
                                         const id = params.id as string
                                         const timesheetLoader = loadResource<Contract>('timesheet', id)
                                         return defer({itemResponse: timesheetLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "view"
                                     }
                                 }
                             ]
@@ -161,7 +217,9 @@ function App() {
                 }
             ],
         },
-    ]);
+    ], {
+        basename: '/moneta'
+    });
     return <RouterProvider router={router} />
 }
 

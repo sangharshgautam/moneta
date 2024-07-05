@@ -42,15 +42,15 @@ const Contracts = (props: {records: Contract[]}) => {
             <TableBody>
                 {props.records.map(record => <TableRow key={record.id}>
                     <TableCell key="refId">
-                        <NavLink to={`/moneta/secure/contract/${record.id}`}>{record.refId}</NavLink>
+                        <NavLink to={`/secure/contract/${record.id}`}>{record.refId}</NavLink>
                     </TableCell>
                     <TableCell key="agencyId">
-                        <NavLink to={`/moneta/secure/agency/${record.agency.id}`}>{record.agency.name}</NavLink>
+                        <NavLink to={`/secure/agency/${record.agency.id}`}>{record.agency.name}</NavLink>
                     </TableCell>
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/moneta/secure/contract/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/secure/contract/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

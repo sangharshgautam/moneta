@@ -47,20 +47,20 @@ const Timesheets = (props: {records: Timesheet[]}) => {
                 {props.records.map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/moneta/secure/timesheet/${record.id}`}>{record.refId}</NavLink>
+                            <NavLink to={`/secure/timesheet/${record.id}`}>{record.refId}</NavLink>
                         </TableCell>
                         <TableCell key="agencyId">
-                            <NavLink to={`/moneta/secure/agency/${record.contract.agency.id}`}>{record.contract.agency.name}</NavLink>
+                            <NavLink to={`/secure/agency/${record.contract.agency.id}`}>{record.contract.agency.name}</NavLink>
                         </TableCell>
                         <TableCell key="contractId">
-                            <NavLink to={`/moneta/secure/contract/${record.contract.id}`}>{record.contract.refId}</NavLink>
+                            <NavLink to={`/secure/contract/${record.contract.id}`}>{record.contract.refId}</NavLink>
                         </TableCell>
                         <TableCell key="startDate">{record.startDate}</TableCell>
                         <TableCell key="endDate">{record.endDate}</TableCell>
                         <TableCell key="days">{record.days}</TableCell>
                         <TableCell key="status">{record.status}</TableCell>
                         <TableCell key="action">
-                            <Button as={NavLink} to={`/moneta/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                            <Button as={NavLink} to={`/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                         </TableCell>
                     </TableRow>)
