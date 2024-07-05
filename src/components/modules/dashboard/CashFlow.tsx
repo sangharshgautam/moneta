@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bar, BarChart, CartesianGrid, Legend, Rectangle, Tooltip, XAxis, YAxis, ResponsiveContainer} from 'recharts';
+import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from 'recharts';
 
 const CashFlow = (props: {records: any[]}) => {
         return (
