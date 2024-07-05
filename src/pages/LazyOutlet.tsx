@@ -1,12 +1,26 @@
 import React from "react";
 import {Dimmer, Loader} from "semantic-ui-react";
-import {Await, useLoaderData} from "react-router-dom";
+import {Await, isRouteErrorResponse, useLoaderData, useRouteError} from "react-router-dom";
 import Agencies from "../components/modules/agency/Agencies";
 import Contracts from "../components/modules/contract/Contracts";
 import Timesheets from "../components/modules/timesheet/Timesheets";
 import CashFlow from "../components/modules/dashboard/CashFlow";
 
-export const OutletContentError = () => <h1>Error..</h1>
+export const OutletContentError = () => {
+    const error = useRouteError();
+    if (isRouteErrorResponse(error)) {
+        return (
+            <div>
+                <h1>Oops!</h1>
+                <h2>{error.status}</h2>
+                <p>{error.statusText}</p>
+                {error.data?.message && <p>{error.data.message}</p>}
+            </div>
+        );
+    } else {
+        return <div>Oops</div>;
+    }
+}
 export const OutletContentLoading = (props: {resource: string}) => <Dimmer active><Loader inverted>Loading {props.resource}</Loader></Dimmer>
 export const AgenciesPage = () => {
     // @ts-ignore

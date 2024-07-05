@@ -15,8 +15,9 @@ import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
 import ViewContractPage from "./pages/contract/ViewContractPage";
 import EditTimesheetPage from "./pages/timesheet/EditTimesheetPage";
 import ViewTimesheetPage from "./pages/timesheet/ViewTimesheetPage";
-import {AgenciesPage, ContractsPage, Dashboard, TimesheetsPage} from "./pages/LazyOutlet";
+import {AgenciesPage, ContractsPage, Dashboard, OutletContentError, TimesheetsPage} from "./pages/LazyOutlet";
 import {AxiosResponse} from "axios";
+import Settings from "./components/modules/settings/Settings";
 
 const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
     console.log(`${resource} Loader`)
@@ -63,16 +64,8 @@ function App() {
                     handle: {
                         crumb: () => "home"
                     },
+                    errorElement: <OutletContentError/>,
                     children: [
-                        {
-                            index: true, element: <Dashboard />,
-                            loader: async () => {
-                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
-                            },
-                            handle: {
-                                crumb: () => "dashboard"
-                            }
-                        },
                         {
                             index: true, element: <Dashboard />,
                             loader: async () => {
@@ -212,6 +205,15 @@ function App() {
                                     }
                                 }
                             ]
+                        },
+                        {
+                            path: 'settings', element: <Settings />,
+                            // loader: async () => {
+                            //     return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                            // },
+                            handle: {
+                                crumb: () => "settings"
+                            },
                         }
                     ]
                 }

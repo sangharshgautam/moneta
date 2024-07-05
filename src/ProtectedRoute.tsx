@@ -6,7 +6,7 @@ import {Navigate} from "react-router-dom";
 
 const ProtectedRoute = (props: {user: any, profile: any, setProfile: (profile: any) =>  void}) => {
     if (!props.user) {
-        return <Navigate to="secure" replace />;
+        return <Navigate to="/secure" replace />;
     }
     return(
     <section className="App">
