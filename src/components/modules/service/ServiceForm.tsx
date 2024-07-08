@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form, FormField,} from 'semantic-ui-react'
-import {NewService, Service} from "../common/Models";
+import {Contract, NewService} from "../common/Models";
+import MonetaApi from "../../../services/MonetaApi";
 
 
 const ServiceForm = <T extends NewService>(props: {service: T, handleSubmit: (serviceForm: T) => void, handleCancel: () => void}) => {
     const [progress, setProgress] = useState(0)
     const [record, setRecord] = useState<T>(props.service)
 
-    const [agencies, setAgencies] = useState<Service[]>([])
+    const [contracts, setContracts] = useState<Contract[]>([])
 
-    // useEffect(() => {
-    //     MonetaApi.list<Service[]>('agency', setProgress).then(
-    //         result => setAgencies(result.data)
-    //     )
-    // }, [])
+    useEffect(() => {
+        MonetaApi.list<Contract[]>('contract', setProgress).then(
+            result => setContracts(result.data)
+        )
+    }, [])
     const handleSubmit = (e: any) => {
         e.preventDefault()
         props.handleSubmit(record);
@@ -22,9 +23,11 @@ const ServiceForm = <T extends NewService>(props: {service: T, handleSubmit: (se
         e.preventDefault()
         props.handleCancel()
     }
-    const options = agencies.map(agency => {
-        return {key: agency.id, text: agency.name, value: agency.id, selected:true, active: true}
+    console.log(progress)
+    const options = contracts.map(contract => {
+        return {key: contract.id, text: contract.refId, value: contract.id, selected:true, active: true}
     });
+    console.log(options)
     return <Form>
             <FormField>
                 <label>Name</label>

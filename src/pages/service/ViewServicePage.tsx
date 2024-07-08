@@ -2,7 +2,6 @@ import React from 'react';
 import {Await, useLoaderData} from "react-router-dom";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import ViewItemSection from "../ViewItemSection";
-import Services from "../../components/modules/service/Services";
 import Contracts from "../../components/modules/contract/Contracts";
 
 const ViewServicePage = () => {

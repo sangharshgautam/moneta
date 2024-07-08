@@ -3,10 +3,8 @@ import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-re
 import {NewService} from "../common/Models";
 import ServiceForm from "./ServiceForm";
 import MonetaApi from "../../../services/MonetaApi";
-import {useParams} from "react-router-dom";
 
 const AddService = () => {
-    const routeParams = useParams<{agencyId: string}>();
     const [service, setService] = useState<NewService>({
         name: '',
         rate: 0
