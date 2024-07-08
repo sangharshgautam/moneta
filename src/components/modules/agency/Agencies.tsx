@@ -32,7 +32,6 @@ const Agencies = (props: {records: Agency[]}) => {
         <Table celled>
             <TableHeader>
                 <TableRow>
-                    <TableHeaderCell>Id</TableHeaderCell>
                     <TableHeaderCell>Name</TableHeaderCell>
                     <TableHeaderCell>Contact</TableHeaderCell>
                     <TableHeaderCell>Website</TableHeaderCell>
@@ -42,7 +41,6 @@ const Agencies = (props: {records: Agency[]}) => {
 
             <TableBody>
                 {props.records.map(record => <TableRow key={record.id}>
-                    <TableCell key="id">{record.id}</TableCell>
                     <TableCell key="name">
                         <NavLink to={`${record.id}`}>{record.name}</NavLink>
                     </TableCell>
@@ -57,7 +55,7 @@ const Agencies = (props: {records: Agency[]}) => {
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='5'>
+                    <TableHeaderCell colSpan='4'>
                         <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Agency</Button>
                     </TableHeaderCell>
                 </TableRow>

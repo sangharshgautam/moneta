@@ -1,35 +1,30 @@
 import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {NewContract} from "../common/Models";
-import ContractForm from "./ContractForm";
+import {NewService} from "../common/Models";
+import ServiceForm from "./ServiceForm";
 import MonetaApi from "../../../services/MonetaApi";
 import {useParams} from "react-router-dom";
 
-const AddContract = () => {
+const AddService = () => {
     const routeParams = useParams<{agencyId: string}>();
-    const [contract, setContract] = useState<NewContract>({
-        agency:{
-            id: Number(routeParams.agencyId)
-        },
-        refId: '',
-        startDate: '',
-        endDate: '',
-        type: 'INSIDE'
+    const [service, setService] = useState<NewService>({
+        name: '',
+        rate: 0
     })
     const [progress, setProgress] = useState(100)
-    const handleSubmit = (contractForm: NewContract) => {
-        MonetaApi.create<NewContract>('contract', contractForm, setProgress).then(
-            result => setContract(result.data)
+    const handleSubmit = (serviceForm: NewService) => {
+        MonetaApi.create<NewService>('service', serviceForm, setProgress).then(
+            result => setService(result.data)
         )
     }
     const handleCancel = () => {
         // navigate(props.parent);
     }
     return   <Segment basic>
-        <Header as='h3'>Add Contract</Header>
+        <Header as='h3'>Add Service</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
             <div className="bar"></div>
-            <div className="label">Loading agency</div>
+            <div className="label">Loading service</div>
         </div>}
         {progress === 100 && <Container>
             <Message>
@@ -39,9 +34,9 @@ const AddContract = () => {
                     recommend reviewing the changes.
                 </p>
             </Message>
-            <ContractForm contract={contract} handleSubmit={handleSubmit} handleCancel={handleCancel}/>
+            <ServiceForm service={service} handleSubmit={handleSubmit} handleCancel={handleCancel}/>
         </Container>
         }
     </Segment>
 }
-export default AddContract;
+export default AddService;

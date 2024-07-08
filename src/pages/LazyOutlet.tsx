@@ -5,6 +5,7 @@ import Agencies from "../components/modules/agency/Agencies";
 import Contracts from "../components/modules/contract/Contracts";
 import Timesheets from "../components/modules/timesheet/Timesheets";
 import CashFlow from "../components/modules/dashboard/CashFlow";
+import Services from "../components/modules/service/Services";
 
 export const OutletContentError = () => {
     const error = useRouteError();
@@ -25,6 +26,10 @@ export const OutletContentLoading = (props: {resource: string}) => <Dimmer activ
 export const AgenciesPage = () => {
     // @ts-ignore
     return <React.Suspense fallback={<OutletContentLoading resource="agencies"/>}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Agencies records={listResponse.data} />)}</Await></React.Suspense>
+}
+export const ServicesPage = () => {
+    // @ts-ignore
+    return <React.Suspense fallback={<OutletContentLoading resource="services"/>}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Services records={listResponse.data} />)}</Await></React.Suspense>
 }
 export const ContractsPage = () => {
     // @ts-ignore

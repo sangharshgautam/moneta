@@ -9,15 +9,25 @@ import EditAgencyPage from "./pages/agency/EditAgencyPage";
 import AddContract from "./components/modules/contract/AddContract";
 import ViewAgencyPage from "./pages/agency/ViewAgencyPage";
 import MonetaApi from "./services/MonetaApi";
-import {Agency, Contract, Timesheet} from "./components/modules/common/Models";
+import {Agency, Contract, Service, Timesheet} from "./components/modules/common/Models";
 import EditContractPage from "./pages/contract/EditContractPage";
 import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
 import ViewContractPage from "./pages/contract/ViewContractPage";
 import EditTimesheetPage from "./pages/timesheet/EditTimesheetPage";
 import ViewTimesheetPage from "./pages/timesheet/ViewTimesheetPage";
-import {AgenciesPage, ContractsPage, Dashboard, OutletContentError, TimesheetsPage} from "./pages/LazyOutlet";
+import {
+    AgenciesPage,
+    ContractsPage,
+    Dashboard,
+    OutletContentError,
+    ServicesPage,
+    TimesheetsPage
+} from "./pages/LazyOutlet";
 import {AxiosResponse} from "axios";
 import Settings from "./components/modules/settings/Settings";
+import EditServicePage from "./pages/service/EditServicePage";
+import ViewServicePage from "./pages/service/ViewServicePage";
+import AddService from "./components/modules/service/AddService";
 
 const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
     console.log(`${resource} Loader`)
@@ -161,6 +171,48 @@ function App() {
                                         const id = params.id as string
                                         const contractLoader = loadResource<Contract>('contract', id)
                                         const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
+                                        return defer({itemResponse: contractLoader, listResponse: timesheetsLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            path: 'service',
+                            handle: {
+                                crumb: () => "service"
+                            },
+                            children: [
+                                {
+                                    index: true, element: <ServicesPage/>,
+                                    loader: async () => {
+                                        return defer({listResponse: loadResourceList<Service[]>('service')})
+                                    }
+                                },
+                                {path: 'add', element: <AddContract/>},
+                                {
+                                    path: ':id/edit', element: <EditServicePage/>,
+                                    loader: async ({ params }) => {
+                                        return defer({itemResponse: loadResource<Service>('service', params.id as string)})
+                                    },
+                                    handle: {
+                                        crumb: () => "edit"
+                                    }
+                                },
+                                {
+                                    path: ':serviceId/add', element: <AddService/>,
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
+                                {
+                                    path: ':id', element: <ViewServicePage/>,
+                                    loader: async ({ params}) => {
+                                        const id = params.id as string
+                                        const contractLoader = loadResource<Service>('service', id)
+                                        const timesheetsLoader = loadResourceList<Contract[]>(`service/${id}/contract`);
                                         return defer({itemResponse: contractLoader, listResponse: timesheetsLoader});
                                     },
                                     handle: {

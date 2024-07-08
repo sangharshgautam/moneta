@@ -5,11 +5,12 @@ import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
 
 const AppLayout = () =>  {
     const items = [
-        {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
+        {id: 1, label: 'Dashboard', icon: 'chart pie', route: 'dashboard'},
         {id: 2, label: 'Agency', icon: 'umbrella', route: 'agency'},
-        {id: 3, label: 'Contract', icon: 'mail', route: 'contract'},
-        {id: 4, label: 'Timesheet', icon: 'clock', route: 'timesheet'},
-        {id: 5, label: 'Settings', icon: 'settings', route: 'settings'}
+        {id: 3, label: 'Service', icon: 'cog', route: 'service'},
+        {id: 4, label: 'Contract', icon: 'handshake', route: 'contract'},
+        {id: 5, label: 'Timesheet', icon: 'clock', route: 'timesheet'},
+        {id: 6, label: 'Settings', icon: 'settings', route: 'settings'}
     ];
     const [activeMenu, setActiveMenu] = useState<number>(1)
     let matches = useMatches();
