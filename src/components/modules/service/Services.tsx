@@ -27,7 +27,7 @@ const Services = (props: {records: Service[]}) => {
         }
     }
     return  <Segment basic>
-        <Header as='h3'>Contracts</Header>
+        <Header as='h3'>Services</Header>
         <Table celled>
             <TableHeader>
                 <TableRow>

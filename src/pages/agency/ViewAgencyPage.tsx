@@ -6,7 +6,7 @@ import ViewItemSection from "../ViewItemSection";
 
 const ViewAgencyPage = () => {
     return <>
-        <ViewItemSection />
+        <ViewItemSection  resource="agency"/>
         {/*
         // @ts-ignore */}
         <React.Suspense fallback={<OutletContentLoading resource="contracts" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError />}>{(listResponse) => (<Contracts records={listResponse.data} />)}</Await></React.Suspense>

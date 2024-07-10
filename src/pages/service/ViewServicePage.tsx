@@ -6,7 +6,7 @@ import Contracts from "../../components/modules/contract/Contracts";
 
 const ViewServicePage = () => {
     return <>
-        <ViewItemSection />
+        <ViewItemSection  resource="service"/>
         {/*
         // @ts-ignore */}
         <React.Suspense fallback={<OutletContentLoading resource="services" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError />}>{(listResponse) => (<Contracts records={listResponse.data} />)}</Await></React.Suspense>

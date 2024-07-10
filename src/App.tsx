@@ -171,7 +171,8 @@ function App() {
                                         const id = params.id as string
                                         const contractLoader = loadResource<Contract>('contract', id)
                                         const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
-                                        return defer({itemResponse: contractLoader, listResponse: timesheetsLoader});
+                                        const servicesLoader = loadResourceList<Service[]>(`contract/${id}/service`);
+                                        return defer({itemResponse: contractLoader, listResponse: timesheetsLoader, servicesResponse: servicesLoader});
                                     },
                                     handle: {
                                         crumb: () => "edit"

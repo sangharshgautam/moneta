@@ -13,13 +13,13 @@ import {
 } from "semantic-ui-react";
 import React from "react";
 
-const ViewItemSection = () => {
-    return <React.Suspense fallback={<OutletContentLoading resource="agency" />}>
+const ViewItemSection = (props:{ resource: string}) => {
+    return <React.Suspense fallback={<OutletContentLoading resource={props.resource} />}>
         {/*
         // @ts-ignore */}
         <Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (
             <Segment basic>
-                <Header as='h3'>Agency: {itemResponse.data?.name}</Header>
+                <Header as='h3'>{props.resource}: {itemResponse.data?.name}</Header>
                 <Table celled>
                     <TableHeader>
                         {/*
