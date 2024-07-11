@@ -40,7 +40,7 @@ const Services = (props: {records: Service[]}) => {
             <TableBody>
                 {props.records.map(record => <TableRow key={record.id}>
                     <TableCell key="name">
-                        <NavLink to={`/secure/service/${record.id}`}>{record.name}</NavLink>
+                        <NavLink to={`/secure/service/${record.id}`}>{record.name}@{record.rate}</NavLink>
                     </TableCell>
                     <TableCell key="rate">{record.rate}</TableCell>
                     <TableCell key="action">
