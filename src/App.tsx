@@ -28,6 +28,7 @@ import Settings from "./components/modules/settings/Settings";
 import EditServicePage from "./pages/service/EditServicePage";
 import ViewServicePage from "./pages/service/ViewServicePage";
 import AddService from "./components/modules/service/AddService";
+import AssignService from "./pages/contract/AssignService";
 
 const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
     console.log(`${resource} Loader`)
@@ -129,10 +130,10 @@ function App() {
                                         const id = params.id as string
                                         const agencyLoader = loadResource<Agency>('agency', id)
                                         const contractsLoader = loadResourceList<Contract[]>(`agency/${id}/contract`);
-                                        return defer({itemResponse: agencyLoader, listResponse: contractsLoader});
+                                        return defer({id, itemResponse: agencyLoader, listResponse: contractsLoader});
                                     },
                                     handle: {
-                                        crumb: () => "view"
+                                        crumb: (data: any) => data.id
                                     }
                                 },
                             ]
@@ -151,15 +152,6 @@ function App() {
                                 },
                                 {path: 'add', element: <AddContract/>},
                                 {
-                                    path: ':id/edit', element: <EditContractPage/>,
-                                    loader: async ({ params }) => {
-                                        return defer({itemResponse: loadResource<Agency>('contract', params.id as string)})
-                                    },
-                                    handle: {
-                                        crumb: () => "edit"
-                                    }
-                                },
-                                {
                                     path: ':contractId/add', element: <AddContract/>,
                                     handle: {
                                         crumb: () => "add"
@@ -172,12 +164,33 @@ function App() {
                                         const contractLoader = loadResource<Contract>('contract', id)
                                         const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
                                         const servicesLoader = loadResourceList<Service[]>(`contract/${id}/service`);
-                                        return defer({itemResponse: contractLoader, listResponse: timesheetsLoader, servicesResponse: servicesLoader});
+                                        return defer({id, itemResponse: contractLoader, listResponse: timesheetsLoader, servicesResponse: servicesLoader});
+                                    },
+                                    handle: {
+                                        crumb: (data: any) => data.id
+                                    }
+                                },
+                                {
+                                    path: ':id/edit', element: <EditContractPage/>,
+                                    loader: async ({ params }) => {
+                                        return defer({itemResponse: loadResource<Agency>('contract', params.id as string)})
                                     },
                                     handle: {
                                         crumb: () => "edit"
                                     }
                                 },
+                                {
+                                    path: ':id/service/add', element: <AssignService/>,
+                                    loader: async ({ params }) => {
+                                        const id = params.id as string
+                                        const contractLoader = loadResource<Contract>('contract', id)
+                                        const servicesLoader = loadResourceList<Contract[]>(`service`);
+                                        return defer({id, itemResponse: contractLoader, listResponse: servicesLoader})
+                                    },
+                                    handle: {
+                                        crumb: (data: any) => data.id
+                                    }
+                                }
                             ]
                         },
                         {
@@ -214,10 +227,10 @@ function App() {
                                         const id = params.id as string
                                         const contractLoader = loadResource<Service>('service', id)
                                         const timesheetsLoader = loadResourceList<Contract[]>(`service/${id}/contract`);
-                                        return defer({itemResponse: contractLoader, listResponse: timesheetsLoader});
+                                        return defer({id, itemResponse: contractLoader, listResponse: timesheetsLoader});
                                     },
                                     handle: {
-                                        crumb: () => "edit"
+                                        crumb: (data: any) => data.id
                                     }
                                 },
                             ]
@@ -251,10 +264,10 @@ function App() {
                                     loader: async ({ params}) => {
                                         const id = params.id as string
                                         const timesheetLoader = loadResource<Contract>('timesheet', id)
-                                        return defer({itemResponse: timesheetLoader});
+                                        return defer({id, itemResponse: timesheetLoader});
                                     },
                                     handle: {
-                                        crumb: () => "view"
+                                        crumb: (data: any) => data.id
                                     }
                                 }
                             ]

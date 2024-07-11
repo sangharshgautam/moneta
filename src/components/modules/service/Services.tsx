@@ -16,7 +16,12 @@ import React from "react";
 import {Service} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
 
-const Services = (props: {records: Service[]}) => {
+interface ServicesProps {
+    actionPrefix: string,
+    records: Service[]
+}
+
+const Services = (props: React.PropsWithChildren<ServicesProps>) => {
     const handleDelete = (id: string | number | undefined) => {
         if(id){
             MonetaApi.delete<string>('service', id).then(
@@ -53,9 +58,10 @@ const Services = (props: {records: Service[]}) => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='5'>
-                        <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Contract</Button>
+                        <Button as={NavLink} to={props.actionPrefix+"add"} size='small' primary floated='right'><Icon name='add' />Add Service</Button>
                     </TableHeaderCell>
                 </TableRow>
+                {props.children}
             </TableFooter>
         </Table>
     </Segment>

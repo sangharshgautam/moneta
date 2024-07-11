@@ -29,7 +29,7 @@ export const AgenciesPage = () => {
 }
 export const ServicesPage = () => {
     // @ts-ignore
-    return <React.Suspense fallback={<OutletContentLoading resource="services"/>}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Services records={listResponse.data} />)}</Await></React.Suspense>
+    return <React.Suspense fallback={<OutletContentLoading resource="services"/>}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Services records={listResponse.data} actionPrefix=""></Services>)}</Await></React.Suspense>
 }
 export const ContractsPage = () => {
     // @ts-ignore
