@@ -1,5 +1,5 @@
 import React from 'react';
-import {Await, NavLink, useLoaderData} from "react-router-dom";
+import {Await, useLoaderData} from "react-router-dom";
 import Timesheets from "../../components/modules/timesheet/Timesheets";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import ViewItemSection from "../ViewItemSection";

@@ -34,10 +34,10 @@ const MonetaApi = {
         return execute('GET', `/${resource}`,  onProgress)
     },
     create: <T>(resource: string, entity: T, onProgress?: (value: number) => void): Promise<AxiosResponse<T>> => {
-        return execute('POST', `/${resource}`, onProgress)
+        return execute('POST', `/${resource}`, onProgress, entity)
     },
     save: <T extends Identifier>(resource: string, entity: T, onProgress?: (value: number) => void): Promise<AxiosResponse<T>> => {
-        return execute('PUT', `/${resource}/${entity.id}`, onProgress)
+        return execute('PUT', `/${resource}/${entity.id}`, onProgress, entity)
     },
     get: <T>(resource: string, id: string | number, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
         return execute('GET', `/${resource}/${id}`,  onProgress)
