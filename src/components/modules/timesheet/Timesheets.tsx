@@ -50,10 +50,10 @@ const Timesheets = (props: {records: Timesheet[]}) => {
                             <NavLink to={`/secure/timesheet/${record.id}`}>{record.refId}</NavLink>
                         </TableCell>
                         <TableCell key="agencyId">
-                            <NavLink to={`/secure/agency/${record.contract.agency.id}`}>{record.contract.agency.name}</NavLink>
+                            <NavLink to={`/secure/agency/${record.contractService.contract.agency.id}`}>{record.contractService.contract.agency.name}</NavLink>
                         </TableCell>
                         <TableCell key="contractId">
-                            <NavLink to={`/secure/contract/${record.contract.id}`}>{record.contract.refId}</NavLink>
+                            <NavLink to={`/secure/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>
                         </TableCell>
                         <TableCell key="startDate">{record.startDate}</TableCell>
                         <TableCell key="endDate">{record.endDate}</TableCell>

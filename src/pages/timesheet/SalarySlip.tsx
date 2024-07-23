@@ -78,7 +78,7 @@ const SalarySlip = () => {
                                     <TableBody>
                                         <TableRow key={itemResponse.data.id}>
                                             <TableCell>{itemResponse.data.days}</TableCell>
-                                            <TableCell key="rate">{itemResponse.data.contract.rate}</TableCell>
+                                            <TableCell key="rate">{JSON.stringify(itemResponse.data.contractService.service.rate)}</TableCell>
                                             <TableCell>{itemResponse.data.salarySlip.totalEarning}</TableCell>
                                         </TableRow>
                                     </TableBody>
