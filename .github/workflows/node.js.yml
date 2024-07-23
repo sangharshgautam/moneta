@@ -48,4 +48,3 @@ jobs:
         git config --global user.name ${{secrets.GH_USERNAME}}
         git remote set-url origin https://${{secrets.GH_PERSONAL_TOKEN}}@github.com/${{secrets.GH_USERNAME}}/moneta.git
         npm run deploy
-
