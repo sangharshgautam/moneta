@@ -9,7 +9,7 @@ import EditAgencyPage from "./pages/agency/EditAgencyPage";
 import AddContract from "./components/modules/contract/AddContract";
 import ViewAgencyPage from "./pages/agency/ViewAgencyPage";
 import MonetaApi from "./services/MonetaApi";
-import {Agency, Contract, Service, Timesheet} from "./components/modules/common/Models";
+import {Agency, Contract, ContractService, Service, Timesheet} from "./components/modules/common/Models";
 import EditContractPage from "./pages/contract/EditContractPage";
 import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
 import ViewContractPage from "./pages/contract/ViewContractPage";
@@ -152,7 +152,14 @@ function App() {
                                 },
                                 {path: 'add', element: <AddContract/>},
                                 {
-                                    path: ':contractId/add', element: <AddContract/>,
+                                    path: ':id/add', element: <AddTimesheet/>,
+                                    loader: async ({ params}) => {
+                                        const id = params.id as string
+                                        const contractLoader = loadResource<Contract>('contract', id)
+                                        const contractsLoader = loadResourceList<Contract[]>(`contract`);
+                                        const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
+                                        return defer({id, itemResponse: contractLoader, contractsResponse: contractsLoader, servicesResponse: servicesLoader});
+                                    },
                                     handle: {
                                         crumb: () => "add"
                                     }
@@ -163,7 +170,7 @@ function App() {
                                         const id = params.id as string
                                         const contractLoader = loadResource<Contract>('contract', id)
                                         const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
-                                        const servicesLoader = loadResourceList<Service[]>(`contract/${id}/service`);
+                                        const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
                                         return defer({id, itemResponse: contractLoader, listResponse: timesheetsLoader, servicesResponse: servicesLoader});
                                     },
                                     handle: {

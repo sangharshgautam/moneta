@@ -32,8 +32,7 @@ export interface Service extends NewService{
 }
 export interface NewTimesheet {
     id?:number|string
-    contract?: Identifier
-    service?: Identifier
+    contractService?: Identifier
     refId: string
     startDate: string
     endDate: string

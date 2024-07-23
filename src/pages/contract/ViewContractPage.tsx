@@ -10,7 +10,7 @@ const ViewContractPage = () => {
         <ViewItemSection resource="contract"/>
             {/*
             // @ts-ignore */}
-        <React.Suspense fallback={<OutletContentLoading resource="services" />}><Await resolve={useLoaderData().servicesResponse} errorElement={<OutletContentError />}>{(servicesResponse) => (<Services records={servicesResponse.data} actionPrefix="service/"/>)}</Await></React.Suspense>
+        <React.Suspense fallback={<OutletContentLoading resource="services" />}><Await resolve={useLoaderData().servicesResponse} errorElement={<OutletContentError />}>{(servicesResponse) => (<Services records={servicesResponse.data.map(item => item.service)} actionPrefix="service/"/>)}</Await></React.Suspense>
             {/*
             // @ts-ignore */}
         <React.Suspense fallback={<OutletContentLoading resource="timesheets" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError />}>{(listResponse) => (<Timesheets records={listResponse.data} />)}</Await></React.Suspense>

@@ -1,20 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Dropdown, Form, FormField, Input,} from 'semantic-ui-react'
 import MonetaApi from "../../../services/MonetaApi";
-import {Contract, NewTimesheet} from "../common/Models";
+import {Contract, ContractService, NewTimesheet, Service} from "../common/Models";
 
 
-const TimesheetForm = <T extends NewTimesheet>(props: {timesheet: T, handleSubmit: (form: T) => void, handleCancel: () => void}) => {
-    const [progress, setProgress] = useState(0)
+const TimesheetForm = <T extends NewTimesheet>(props: {contractId: number, timesheet: T, contracts: Contract[], contractServices: ContractService[], handleSubmit: (form: T) => void, handleCancel: () => void}) => {
     const [record, setRecord] = useState<T>(props.timesheet)
 
-    const [contracts, setContracts] = useState<Contract[]>([])
-
-    useEffect(() => {
-        MonetaApi.list<Contract[]>('contract', setProgress).then(
-            result => setContracts(result.data)
-        )
-    }, [])
     const handleSubmit = (e: any) => {
         e.preventDefault()
         props.handleSubmit(record);
@@ -23,8 +15,15 @@ const TimesheetForm = <T extends NewTimesheet>(props: {timesheet: T, handleSubmi
         e.preventDefault()
         props.handleCancel()
     }
-    const options = contracts.map(item => {
-        return {key: item.id, text: `${item.startDate} to ${item.endDate}`, value: item.id, selected:true, active: true}
+    const contracts = props.contracts.map(item => {
+        return {key: item.id, text: item.refId, description: `${item.startDate} to ${item.endDate}`,value: item.id, selected:false, active: true}
+    });
+    const status = [
+        {key: 'draft', text: 'Draft', description: 'Draft',value: 'Draft', selected:true, active: true},
+        {key: 'approved', text: 'Approved', description: 'Approved',value: 'Approved', selected:false, active: true}
+    ];
+    const services = props.contractServices.map(item => {
+        return {key: item.id, text: item.service.name, value: item.id, selected:true, active: true}
     });
     return <Form>
             <FormField>
@@ -35,10 +34,22 @@ const TimesheetForm = <T extends NewTimesheet>(props: {timesheet: T, handleSubmi
                     className='icon'
                     labeled button
                     selection
-                    options={options}
-                    value={record.contract?.id}
-                    loading={progress!==100}
-                    onChange={(e, data) => setRecord({...record, agency: {id: data.value as number}})}
+                    options={contracts}
+                    value={props.contractId}
+                    disabled={true}
+                />
+            </FormField>
+            <FormField>
+                <label>Contract Service</label>
+                <Dropdown
+                    placeholder='Select Contract Service'
+                    icon="cog"
+                    className='icon'
+                    labeled button
+                    selection
+                    options={services}
+                    value={record.contractService?.id}
+                    onChange={(e, data) => setRecord({...record, contractService: {id: data.value as number}})}
                 />
             </FormField>
             <FormField>
@@ -58,7 +69,16 @@ const TimesheetForm = <T extends NewTimesheet>(props: {timesheet: T, handleSubmi
             </FormField>
             <FormField>
                 <label>Status</label>
-                <Input placeholder='Status' value={record.status} onChange={(e) => setRecord({...record, status: e.target.value})}/>
+                <Dropdown
+                    placeholder='Select State'
+                    icon="mail"
+                    className='icon'
+                    labeled button
+                    selection
+                    options={status}
+                    value={record.status}
+                    onChange={(e, data) => setRecord({...record, status: data.value})}
+                />
             </FormField>
             <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
             <Button onClick={handleCancel}>Cancel</Button>

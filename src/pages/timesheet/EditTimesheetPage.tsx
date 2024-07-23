@@ -23,7 +23,7 @@ const EditTimesheetPage = () => {
     return   <React.Suspense fallback={<OutletContentLoading resource="agency" />}>
         {/*
         // @ts-ignore */}
-        <Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (
+        <Await resolve={Promise.all([useLoaderData().itemResponse, useLoaderData().contractsResponse, useLoaderData().servicesResponse])} errorElement={<OutletContentError />}>{([itemResponse, contractsResponse, servicesResponse]) => (
             <Segment basic>
                 <Header as='h3'>Edit Timesheet</Header>
                 <Container>
@@ -34,7 +34,7 @@ const EditTimesheetPage = () => {
                             recommend reviewing the changes.
                         </p>
                     </Message>
-                    <TimesheetForm timesheet={itemResponse.data} handleSubmit={handleSubmit} handleCancel={handleCancel}></TimesheetForm>
+                    <TimesheetForm contractId={itemResponse.data.id} timesheet={itemResponse.data} contracts={contractsResponse.data} contractServices={servicesResponse.data} handleSubmit={handleSubmit} handleCancel={handleCancel}></TimesheetForm>
                 </Container>
             </Segment>
         )}
