@@ -1,13 +1,12 @@
 import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {Await, useLoaderData, useParams} from "react-router-dom";
+import {Await, useLoaderData} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {NewTimesheet} from "../common/Models";
 import TimesheetForm from "./TimesheetForm";
 import {OutletContentError, OutletContentLoading} from "../../../pages/LazyOutlet";
 
 const AddTimesheet = () => {
-    const routeParams = useParams<{contractId: string}>();
     const [timesheet, setTimesheet] = useState<NewTimesheet>({
         startDate: '',
         endDate: '',

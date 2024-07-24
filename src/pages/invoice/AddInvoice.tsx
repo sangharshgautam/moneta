@@ -1,13 +1,12 @@
 import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {Await, useLoaderData, useParams} from "react-router-dom";
+import {Await, useLoaderData} from "react-router-dom";
 import {NewInvoice} from "../../components/modules/common/Models";
 import InvoiceForm from "./InvoiceForm";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import MonetaApi from "../../services/MonetaApi";
 
 const AddInvoice = () => {
-    const routeParams = useParams<{contractId: string}>();
     const [invoice, setInvoice] = useState<NewInvoice>({
         invoiceItems: []
     })
