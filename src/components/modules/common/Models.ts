@@ -38,9 +38,14 @@ export interface NewTimesheet {
     days: number
     status: string
 }
+export interface SalarySlip {
+    totalEarning: number
+    netPayment: number
+}
 export interface Timesheet extends NewTimesheet{
     id:number|string
     contractService: ContractService
+    salarySlip: SalarySlip
 }
 export interface NewContractService {
     id?:number|string|undefined
@@ -62,6 +67,7 @@ export interface InvoiceItem {
     id:number
     contractService: ContractService
     days: number
+    total: number
 }
 
 export interface NewInvoice {
@@ -74,5 +80,9 @@ export interface NewInvoice {
 }
 export interface Invoice {
     id:number|string
+    refId: string
+    startDate: string
+    endDate: string
+    status: string
     invoiceItems: InvoiceItem[]
 }

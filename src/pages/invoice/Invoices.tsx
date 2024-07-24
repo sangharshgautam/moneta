@@ -32,12 +32,12 @@ const Invoices = (props: {records: Invoice[]}) => {
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>RefId</TableHeaderCell>
-                    <TableHeaderCell>Agency</TableHeaderCell>
-                    <TableHeaderCell>Contract</TableHeaderCell>
+                    {/*<TableHeaderCell>Agency</TableHeaderCell>*/}
+                    {/*<TableHeaderCell>Contract</TableHeaderCell>*/}
 
                     <TableHeaderCell>Start</TableHeaderCell>
                     <TableHeaderCell>End</TableHeaderCell>
-                    <TableHeaderCell>Days</TableHeaderCell>
+                    {/*<TableHeaderCell>Days</TableHeaderCell>*/}
                     <TableHeaderCell>Status</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
@@ -46,23 +46,23 @@ const Invoices = (props: {records: Invoice[]}) => {
             <TableBody>
                 {props.records.map(record =>
                     <TableRow key={record.id}>
-                        {/*<TableCell key="refId">*/}
-                        {/*    <NavLink to={`/secure/timesheet/${record.id}`}>{record.refId}</NavLink>*/}
-                        {/*</TableCell>*/}
-                        {/*<TableCell key="agencyId">*/}
+                        <TableCell key="refId">
+                            <NavLink to={`/secure/invoice/${record.id}`}>{record.refId}</NavLink>
+                        </TableCell>
+                        {/*<TableCell key="service">*/}
                         {/*    <NavLink to={`/secure/agency/${record.contractService.contract.agency.id}`}>{record.contractService.contract.agency.name}</NavLink>*/}
                         {/*</TableCell>*/}
                         {/*<TableCell key="contractId">*/}
                         {/*    <NavLink to={`/secure/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
                         {/*</TableCell>*/}
-                        {/*<TableCell key="startDate">{record.startDate}</TableCell>*/}
-                        {/*<TableCell key="endDate">{record.endDate}</TableCell>*/}
+                        <TableCell key="startDate">{record.startDate}</TableCell>
+                        <TableCell key="endDate">{record.endDate}</TableCell>
                         {/*<TableCell key="days">{record.days}</TableCell>*/}
-                        {/*<TableCell key="status">{record.status}</TableCell>*/}
-                        {/*<TableCell key="action">*/}
-                        {/*    <Button as={NavLink} to={`/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>*/}
-                        {/*    <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>*/}
-                        {/*</TableCell>*/}
+                        <TableCell key="status">{record.status}</TableCell>
+                        <TableCell key="action">
+                            <Button as={NavLink} to={`/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                            <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
+                        </TableCell>
                     </TableRow>
                 )
                 }

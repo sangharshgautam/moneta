@@ -19,6 +19,7 @@ import {
     AgenciesPage,
     ContractsPage,
     Dashboard,
+    InvoicesPage,
     OutletContentError,
     ServicesPage,
     TimesheetsPage
@@ -30,6 +31,7 @@ import ViewServicePage from "./pages/service/ViewServicePage";
 import AddService from "./components/modules/service/AddService";
 import AssignService from "./pages/contract/AssignService";
 import AddInvoice from "./pages/invoice/AddInvoice";
+import ViewInvoice from "./pages/invoice/ViewInvoice";
 
 const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
     console.log(`${resource} Loader`)
@@ -288,6 +290,36 @@ function App() {
                                         const id = params.id as string
                                         const timesheetLoader = loadResource<Contract>('timesheet', id)
                                         return defer({id, itemResponse: timesheetLoader});
+                                    },
+                                    handle: {
+                                        crumb: (data: any) => data.id
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            path: 'invoice',
+                            handle: {
+                                crumb: () => "invoice"
+                            },
+                            children: [
+                                {
+                                    index: true, element: <InvoicesPage/>,
+                                    loader: async () => {
+                                        return defer({listResponse: loadResourceList<Contract[]>('invoice')})
+                                    }
+                                },
+                                {path: 'add', element: <AddContract/>},
+
+                                {
+                                    path: ':id', element: <ViewInvoice/>,
+                                    loader: async ({params}) => {
+                                        const id = params.id as string
+                                        const invoiceLoader = loadResource<Contract>('invoice', id)
+                                        return defer({
+                                            id,
+                                            itemResponse: invoiceLoader
+                                        });
                                     },
                                     handle: {
                                         crumb: (data: any) => data.id

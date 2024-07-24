@@ -39,6 +39,8 @@ const Timesheets = (props: {records: Timesheet[]}) => {
                     <TableHeaderCell>End</TableHeaderCell>
                     <TableHeaderCell>Days</TableHeaderCell>
                     <TableHeaderCell>Status</TableHeaderCell>
+                    <TableHeaderCell>Total Earning</TableHeaderCell>
+                    <TableHeaderCell>Net Payment</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -59,6 +61,8 @@ const Timesheets = (props: {records: Timesheet[]}) => {
                         <TableCell key="endDate">{record.endDate}</TableCell>
                         <TableCell key="days">{record.days}</TableCell>
                         <TableCell key="status">{record.status}</TableCell>
+                        <TableCell key="status">{record.salarySlip.totalEarning}</TableCell>
+                        <TableCell key="status">{record.salarySlip.netPayment}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
@@ -68,7 +72,7 @@ const Timesheets = (props: {records: Timesheet[]}) => {
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='8'>
+                    <TableHeaderCell colSpan='10'>
                         <Button as={NavLink} to="timesheet/add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
                     </TableHeaderCell>
                 </TableRow>
