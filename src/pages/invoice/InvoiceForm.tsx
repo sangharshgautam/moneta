@@ -20,7 +20,7 @@ const InvoiceForm = <T extends NewInvoice>(props: {contract: Contract, invoice: 
     const [record, setRecord] = useState<NewInvoice>(props.invoice)
     const [items, setItems] = useState<NewInvoiceItem[]>(props.invoice.invoiceItems)
 
-    const handleAdd = (e: any) => {
+    const handleAdd = () => {
         // e.preventDefault()
         setItems((items) => [
             ...items,
@@ -31,14 +31,14 @@ const InvoiceForm = <T extends NewInvoice>(props: {contract: Contract, invoice: 
             }
         ]);
     }
-    const updateRecord = (index: number, updates: { }) => {
-        // e.preventDefault()
-        Object.assign(items[index], updates)
-        // setRecords((t) => [...newTodos]);
-    }
-    const handleDelete = (e: any) => {
-        e.preventDefault()
-    }
+    // const updateRecord = (index: number, updates: { }) => {
+    //     // e.preventDefault()
+    //     Object.assign(items[index], updates)
+    //     // setRecords((t) => [...newTodos]);
+    // }
+    // const handleDelete = (e: any) => {
+    //     e.preventDefault()
+    // }
     const handleSubmit = (e: any) => {
         e.preventDefault()
         record[`invoiceItems`] = items
