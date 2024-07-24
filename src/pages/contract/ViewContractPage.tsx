@@ -3,7 +3,6 @@ import {Await, useLoaderData} from "react-router-dom";
 import Timesheets from "../../components/modules/timesheet/Timesheets";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import ViewItemSection from "../ViewItemSection";
-import Services from "../../components/modules/service/Services";
 import Invoices from "../invoice/Invoices";
 import ContractServices from "../contract-services/ContractServices";
 

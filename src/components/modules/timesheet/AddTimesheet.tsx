@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
 import {Await, useLoaderData, useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {ContractService, NewTimesheet} from "../common/Models";
+import {NewTimesheet} from "../common/Models";
 import TimesheetForm from "./TimesheetForm";
 import {OutletContentError, OutletContentLoading} from "../../../pages/LazyOutlet";
 

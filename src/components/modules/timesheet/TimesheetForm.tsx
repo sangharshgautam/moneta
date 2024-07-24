@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Dropdown, Form, FormField, Input,} from 'semantic-ui-react'
-import MonetaApi from "../../../services/MonetaApi";
-import {Contract, ContractService, NewTimesheet, Service} from "../common/Models";
+import {Contract, ContractService, NewTimesheet} from "../common/Models";
 
 
 const TimesheetForm = <T extends NewTimesheet>(props: {contractId: number, timesheet: T, contracts: Contract[], contractServices: ContractService[], handleSubmit: (form: T) => void, handleCancel: () => void}) => {
