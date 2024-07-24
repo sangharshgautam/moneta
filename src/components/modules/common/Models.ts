@@ -25,7 +25,6 @@ export interface Contract extends  NewContract {
 export interface NewService {
     id?:number|string
     name: string
-    rate: number
 }
 export interface Service extends NewService{
     id:number|string
@@ -44,12 +43,36 @@ export interface Timesheet extends NewTimesheet{
     contractService: ContractService
 }
 export interface NewContractService {
-    id?:number|string
-    contractId?: number|string
-    serviceId?: number|string
+    id?:number|string|undefined
+    contract: Contract
+    service: Service | undefined
+    rate: number
 }
 export interface ContractService extends NewContractService {
     id:number|string
     contract: Contract
     service: Service
+}
+export interface NewInvoiceItem {
+    id?:number
+    contractService?: Identifier
+    days: number
+}
+export interface InvoiceItem {
+    id:number
+    contractService: ContractService
+    days: number
+}
+
+export interface NewInvoice {
+    id?:number|string|undefined
+    refId?:number|string|undefined
+    startDate?: string
+    endDate?: string
+    status?: string
+    invoiceItems: NewInvoiceItem[]
+}
+export interface Invoice {
+    id:number|string
+    invoiceItems: InvoiceItem[]
 }

@@ -33,10 +33,10 @@ const ServiceForm = <T extends NewService>(props: {service: T, handleSubmit: (se
                 <label>Name</label>
                 <input type="text" placeholder='Name for the service' value={record.name} onChange={(e) => setRecord({...record, name: e.target.value})}/>
             </FormField>
-            <FormField>
-                <label>Rate</label>
-                <input type="text" placeholder='Rate for the Service' value={record.rate} onChange={(e) => setRecord({...record, rate: e.target.value})}/>
-            </FormField>
+            {/*<FormField>*/}
+            {/*    <label>Rate</label>*/}
+            {/*    <input type="text" placeholder='Rate for the Service' value={record.rate} onChange={(e) => setRecord({...record, rate: e.target.value})}/>*/}
+            {/*</FormField>*/}
             <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
             <Button onClick={handleCancel}>Cancel</Button>
         </Form>

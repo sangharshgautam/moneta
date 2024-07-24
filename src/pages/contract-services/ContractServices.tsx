@@ -13,18 +13,18 @@ import {
 } from "semantic-ui-react";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import {Service} from "../common/Models";
-import MonetaApi from "../../../services/MonetaApi";
+import {ContractService} from "../../components/modules/common/Models";
+import MonetaApi from "../../services/MonetaApi";
 
 interface ServicesProps {
     actionPrefix: string,
-    records: Service[]
+    records: ContractService[]
 }
 
-const Services = (props: React.PropsWithChildren<ServicesProps>) => {
+const ContractServices = (props: React.PropsWithChildren<ServicesProps>) => {
     const handleDelete = (id: string | number | undefined) => {
         if(id){
-            MonetaApi.delete<string>('service', id).then(
+            MonetaApi.delete<string>('contractservice', id).then(
                 result => {
                     console.log(result)
                 }
@@ -37,17 +37,19 @@ const Services = (props: React.PropsWithChildren<ServicesProps>) => {
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>Name</TableHeaderCell>
+                    <TableHeaderCell>Rate</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
             </TableHeader>
 
             <TableBody>
-                {props.records.map(record => <TableRow key={record.id}>
+                {props.records.map(record => <TableRow key={record.service.id}>
                     <TableCell key="name">
-                        <NavLink to={`/secure/service/${record.id}`}>{record.name}</NavLink>
+                        <NavLink to={`/secure/service/${record.service.id}`}>{record.service.name}</NavLink>
                     </TableCell>
+                    <TableCell key="rate">{record.rate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/secure/service/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/secure/service/${record.service.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
@@ -64,4 +66,4 @@ const Services = (props: React.PropsWithChildren<ServicesProps>) => {
         </Table>
     </Segment>
 }
-export default Services;
+export default ContractServices;

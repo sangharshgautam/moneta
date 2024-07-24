@@ -9,7 +9,7 @@ import EditAgencyPage from "./pages/agency/EditAgencyPage";
 import AddContract from "./components/modules/contract/AddContract";
 import ViewAgencyPage from "./pages/agency/ViewAgencyPage";
 import MonetaApi from "./services/MonetaApi";
-import {Agency, Contract, ContractService, Service, Timesheet} from "./components/modules/common/Models";
+import {Agency, Contract, ContractService, Invoice, Service, Timesheet} from "./components/modules/common/Models";
 import EditContractPage from "./pages/contract/EditContractPage";
 import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
 import ViewContractPage from "./pages/contract/ViewContractPage";
@@ -29,6 +29,7 @@ import EditServicePage from "./pages/service/EditServicePage";
 import ViewServicePage from "./pages/service/ViewServicePage";
 import AddService from "./components/modules/service/AddService";
 import AssignService from "./pages/contract/AssignService";
+import AddInvoice from "./pages/invoice/AddInvoice";
 
 const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
     console.log(`${resource} Loader`)
@@ -151,19 +152,7 @@ function App() {
                                     }
                                 },
                                 {path: 'add', element: <AddContract/>},
-                                {
-                                    path: ':id/add', element: <AddTimesheet/>,
-                                    loader: async ({ params}) => {
-                                        const id = params.id as string
-                                        const contractLoader = loadResource<Contract>('contract', id)
-                                        const contractsLoader = loadResourceList<Contract[]>(`contract`);
-                                        const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
-                                        return defer({id, itemResponse: contractLoader, contractsResponse: contractsLoader, servicesResponse: servicesLoader});
-                                    },
-                                    handle: {
-                                        crumb: () => "add"
-                                    }
-                                },
+
                                 {
                                     path: ':id', element: <ViewContractPage/>,
                                     loader: async ({ params}) => {
@@ -171,7 +160,8 @@ function App() {
                                         const contractLoader = loadResource<Contract>('contract', id)
                                         const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
                                         const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
-                                        return defer({id, itemResponse: contractLoader, listResponse: timesheetsLoader, servicesResponse: servicesLoader});
+                                        const invoicesLoader = loadResourceList<Invoice[]>(`contract/${id}/invoice`);
+                                        return defer({id, itemResponse: contractLoader, listResponse: timesheetsLoader, servicesResponse: servicesLoader, invoices: invoicesLoader});
                                     },
                                     handle: {
                                         crumb: (data: any) => data.id
@@ -187,6 +177,20 @@ function App() {
                                     }
                                 },
                                 {
+                                    path: ':id/timesheet/add', element: <AddTimesheet/>,
+                                    loader: async ({ params}) => {
+                                        const id = params.id as string
+                                        const contractLoader = loadResource<Contract>('contract', id)
+                                        const contractsLoader = loadResourceList<Contract[]>(`contract`);
+                                        const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
+                                        const invoicesLoader = loadResourceList<Invoice[]>(`contract/${id}/invoice`);
+                                        return defer({id, itemResponse: contractLoader, contractsResponse: contractsLoader, servicesResponse: servicesLoader, invoices: invoicesLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
+                                {
                                     path: ':id/service/add', element: <AssignService/>,
                                     loader: async ({ params }) => {
                                         const id = params.id as string
@@ -197,7 +201,19 @@ function App() {
                                     handle: {
                                         crumb: (data: any) => data.id
                                     }
-                                }
+                                },
+                                {
+                                    path: ':id/invoice/add', element: <AddInvoice/>,
+                                    loader: async ({ params}) => {
+                                        const id = params.id as string
+                                        const contractLoader = loadResource<Contract>('contract', id)
+                                        const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
+                                        return defer({id, contractLoader, servicesLoader});
+                                    },
+                                    handle: {
+                                        crumb: () => "add"
+                                    }
+                                },
                             ]
                         },
                         {

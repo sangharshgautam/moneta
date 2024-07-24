@@ -69,7 +69,7 @@ const Timesheets = (props: {records: Timesheet[]}) => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='8'>
-                        <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
+                        <Button as={NavLink} to="timesheet/add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

@@ -13,7 +13,7 @@ const AssignService = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         if(record){
-            MonetaApi.create<NewContractService>(`contract/${record?.contractId}/service/add`, record).then(
+            MonetaApi.create<NewContractService>(`contract/${record?.contract.id}/service/add`, record).then(
                 result => setRecord(result.data)
             )
         }
@@ -52,10 +52,10 @@ const AssignService = () => {
                                 labeled button
                                 selection
                                 options={listResponse.data.map((service: any) => {
-                                    return {key: service.id, text: `${service.name} @ ${service.rate}`, value: service.id, selected:true, active: true}
+                                    return {key: service.id, text: `${service.name}`, value: service.id, selected:true, active: true}
                                 })}
-                                value={record?.serviceId}
-                                onChange={(e, data) => setRecord({...record, serviceId: data.value as number})}
+                                value={record?.service?.id}
+                                // onChange={(e, data) => setRecord({...record, serviceId: data.value as number})}
                             />
                         </FormField>
                         <Button type='submit' primary onClick={handleSubmit}>Assign</Button>

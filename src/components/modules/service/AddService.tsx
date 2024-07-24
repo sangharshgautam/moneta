@@ -6,8 +6,7 @@ import MonetaApi from "../../../services/MonetaApi";
 
 const AddService = () => {
     const [service, setService] = useState<NewService>({
-        name: '',
-        rate: 0
+        name: ''
     })
     const [progress, setProgress] = useState(100)
     const handleSubmit = (serviceForm: NewService) => {
