@@ -35,7 +35,7 @@ const InvoiceItems = (props: {records: InvoiceItem[]}) => {
                     <TableHeaderCell>Contract</TableHeaderCell>
                     <TableHeaderCell>Rate</TableHeaderCell>
                     <TableHeaderCell>Days</TableHeaderCell>
-                    <TableHeaderCell>Total</TableHeaderCell>
+                    <TableHeaderCell>Amount</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -51,7 +51,7 @@ const InvoiceItems = (props: {records: InvoiceItem[]}) => {
                         </TableCell>
                         <TableCell key="rate">{record.contractService.rate}</TableCell>
                         <TableCell key="days">{record.days}</TableCell>
-                        <TableCell key="status">{record.total}</TableCell>
+                        <TableCell key="status">£ {record.amount}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/secure/invoice-item/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
@@ -61,7 +61,16 @@ const InvoiceItems = (props: {records: InvoiceItem[]}) => {
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='10'>
+                    <TableHeaderCell colSpan='3'></TableHeaderCell>
+                    <TableHeaderCell>
+                        Subtotal
+                    </TableHeaderCell>
+                    <TableHeaderCell colSpan='2'>
+                        Subtotal
+                    </TableHeaderCell>
+                </TableRow>
+                <TableRow>
+                    <TableHeaderCell colSpan='6'>
                         <Button as={NavLink} to="invoice-item/add" size='small' primary floated='right'><Icon name='add' />Add Task</Button>
                     </TableHeaderCell>
                 </TableRow>

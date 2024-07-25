@@ -67,7 +67,7 @@ export interface InvoiceItem {
     id:number
     contractService: ContractService
     days: number
-    total: number
+    amount: number
 }
 
 export interface NewInvoice {
@@ -85,4 +85,7 @@ export interface Invoice {
     endDate: string
     status: string
     invoiceItems: InvoiceItem[]
+    amount: number
+    tax: number
+    total: number
 }

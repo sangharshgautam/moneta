@@ -37,8 +37,10 @@ const Invoices = (props: {records: Invoice[]}) => {
 
                     <TableHeaderCell>Start</TableHeaderCell>
                     <TableHeaderCell>End</TableHeaderCell>
-                    {/*<TableHeaderCell>Days</TableHeaderCell>*/}
                     <TableHeaderCell>Status</TableHeaderCell>
+                    <TableHeaderCell>Amount</TableHeaderCell>
+                    <TableHeaderCell>Tax</TableHeaderCell>
+                    <TableHeaderCell>Total</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -57,8 +59,11 @@ const Invoices = (props: {records: Invoice[]}) => {
                         {/*</TableCell>*/}
                         <TableCell key="startDate">{record.startDate}</TableCell>
                         <TableCell key="endDate">{record.endDate}</TableCell>
-                        {/*<TableCell key="days">{record.days}</TableCell>*/}
+
                         <TableCell key="status">{record.status}</TableCell>
+                        <TableCell key="amount">£ {record.amount}</TableCell>
+                        <TableCell key="tax">£ {record.tax}</TableCell>
+                        <TableCell key="total">£ {record.total}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
