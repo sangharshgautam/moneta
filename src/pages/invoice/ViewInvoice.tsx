@@ -3,6 +3,7 @@ import {Await, useLoaderData} from "react-router-dom";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import ViewItemSection from "../ViewItemSection";
 import InvoiceItems from "./InvoiceItems";
+import Payments from "../payment/Payments";
 
 const ViewInvoice = () => {
     return <>
@@ -10,7 +11,7 @@ const ViewInvoice = () => {
 
         {/*
         // @ts-ignore */}
-        <React.Suspense fallback={<OutletContentLoading resource="invoices" />}><Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (<InvoiceItems records={itemResponse.data.invoiceItems} />)}</Await></React.Suspense>
+        <React.Suspense fallback={<OutletContentLoading resource="invoices" />}><Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (<><InvoiceItems records={itemResponse.data.invoiceItems} /><Payments records={itemResponse.data.payments} /></>)}</Await></React.Suspense>
     </>
 }
 export default ViewInvoice;

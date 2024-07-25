@@ -41,6 +41,7 @@ const Invoices = (props: {records: Invoice[]}) => {
                     <TableHeaderCell>Amount</TableHeaderCell>
                     <TableHeaderCell>Tax</TableHeaderCell>
                     <TableHeaderCell>Total</TableHeaderCell>
+                    <TableHeaderCell>Due</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -64,6 +65,7 @@ const Invoices = (props: {records: Invoice[]}) => {
                         <TableCell key="amount">£ {record.amount}</TableCell>
                         <TableCell key="tax">£ {record.tax}</TableCell>
                         <TableCell key="total">£ {record.total}</TableCell>
+                        <TableCell key="due">£ {record.due}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
@@ -74,7 +76,7 @@ const Invoices = (props: {records: Invoice[]}) => {
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='8'>
+                    <TableHeaderCell colSpan='9'>
                         <Button as={NavLink} to="invoice/add" size='small' primary floated='right'><Icon name='add' />Add Invoice</Button>
                     </TableHeaderCell>
                 </TableRow>

@@ -88,4 +88,10 @@ export interface Invoice {
     amount: number
     tax: number
     total: number
+    due: number
+}
+export interface Payment {
+    id: number | string
+    paymentDate: string
+    amount: number;
 }
