@@ -92,6 +92,12 @@ export interface Invoice {
 }
 export interface Payment {
     id: number | string
-    paymentDate: string
+    date: string
+    amount: number;
+}
+export interface Expense {
+    id: number | string
+    description: string
+    date: string
     amount: number;
 }

@@ -9,7 +9,15 @@ import EditAgencyPage from "./pages/agency/EditAgencyPage";
 import AddContract from "./components/modules/contract/AddContract";
 import ViewAgencyPage from "./pages/agency/ViewAgencyPage";
 import MonetaApi from "./services/MonetaApi";
-import {Agency, Contract, ContractService, Invoice, Service, Timesheet} from "./components/modules/common/Models";
+import {
+    Agency,
+    Contract,
+    ContractService,
+    Expense,
+    Invoice,
+    Service,
+    Timesheet
+} from "./components/modules/common/Models";
 import EditContractPage from "./pages/contract/EditContractPage";
 import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
 import ViewContractPage from "./pages/contract/ViewContractPage";
@@ -18,7 +26,7 @@ import ViewTimesheetPage from "./pages/timesheet/ViewTimesheetPage";
 import {
     AgenciesPage,
     ContractsPage,
-    Dashboard,
+    Dashboard, ExpensesPage,
     InvoicesPage,
     OutletContentError,
     ServicesPage,
@@ -307,6 +315,36 @@ function App() {
                                     index: true, element: <InvoicesPage/>,
                                     loader: async () => {
                                         return defer({listResponse: loadResourceList<Contract[]>('invoice')})
+                                    }
+                                },
+                                {path: 'add', element: <AddContract/>},
+
+                                {
+                                    path: ':id', element: <ViewInvoice/>,
+                                    loader: async ({params}) => {
+                                        const id = params.id as string
+                                        const invoiceLoader = loadResource<Contract>('invoice', id)
+                                        return defer({
+                                            id,
+                                            itemResponse: invoiceLoader
+                                        });
+                                    },
+                                    handle: {
+                                        crumb: (data: any) => data.id
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            path: 'expense',
+                            handle: {
+                                crumb: () => "invoice"
+                            },
+                            children: [
+                                {
+                                    index: true, element: <ExpensesPage/>,
+                                    loader: async () => {
+                                        return defer({listResponse: loadResourceList<Expense[]>('expense')})
                                     }
                                 },
                                 {path: 'add', element: <AddContract/>},
