@@ -101,3 +101,15 @@ export interface Expense {
     date: string
     amount: number;
 }
+export interface Transaction {
+    id: number | string
+    date: string
+    description: string
+    type: string
+    amount: string
+}
+export interface Account {
+    id: number | string
+    name: string
+    transactions: Transaction[]
+}

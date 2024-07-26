@@ -8,6 +8,7 @@ import CashFlow from "../components/modules/dashboard/CashFlow";
 import Services from "../components/modules/service/Services";
 import Invoices from "./invoice/Invoices";
 import Expenses from "./expense/Expenses";
+import Accounts from "./account/Accounts";
 
 export const OutletContentError = () => {
     const error = useRouteError();
@@ -47,7 +48,11 @@ export const InvoicesPage = () => {
 }
 export const ExpensesPage = () => {
     // @ts-ignore
-    return <React.Suspense fallback={<OutletContentLoading resource="invoices" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Expenses records={listResponse.data} />)}</Await></React.Suspense>
+    return <React.Suspense fallback={<OutletContentLoading resource="expenses" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Expenses records={listResponse.data} />)}</Await></React.Suspense>
+}
+export const AccountsPage = () => {
+    // @ts-ignore
+    return <React.Suspense fallback={<OutletContentLoading resource="accounts" />}><Await resolve={useLoaderData().listResponse} errorElement={<OutletContentError/>}>{(listResponse) => (<Accounts records={listResponse.data} />)}</Await></React.Suspense>
 }
 export const Dashboard = () => {
     // @ts-ignore

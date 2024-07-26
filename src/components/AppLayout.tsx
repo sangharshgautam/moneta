@@ -12,7 +12,8 @@ const AppLayout = () =>  {
         {id: 5, label: 'Invoice', icon: 'clipboard outline', route: 'invoice'},
         {id: 6, label: 'Timesheet', icon: 'clock', route: 'timesheet'},
         {id: 7, label: 'Expense', icon: 'dollar', route: 'expense'},
-        {id: 8, label: 'Settings', icon: 'settings', route: 'settings'}
+        {id: 8, label: 'Account', icon: 'exchange', route: 'account'},
+        {id: 9, label: 'Settings', icon: 'settings', route: 'settings'}
     ];
     const [activeMenu, setActiveMenu] = useState<number>(1)
     let matches = useMatches();

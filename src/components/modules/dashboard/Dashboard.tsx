@@ -1,19 +1,8 @@
-import {
-    Button,
-    Container,
-    Header, Icon,
-    Message,
-    MessageHeader,
-    Segment,
-    Table, TableFooter,
-    TableHeader,
-    TableHeaderCell,
-    TableRow
-} from "semantic-ui-react";
+import {Container, Header, Message, MessageHeader, Segment} from "semantic-ui-react";
 import React from "react";
 import CashFlow from "./CashFlow";
 import {OutletContentError, OutletContentLoading} from "../../../pages/LazyOutlet";
-import {Await, NavLink, useLoaderData} from "react-router-dom";
+import {Await, useLoaderData} from "react-router-dom";
 
 const Dashboard = () => {
     return <React.Suspense fallback={<OutletContentLoading resource="agency" />}>
