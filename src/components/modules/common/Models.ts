@@ -111,5 +111,6 @@ export interface Transaction {
 export interface Account {
     id: number | string
     name: string
+    balance: number
     transactions: Transaction[]
 }

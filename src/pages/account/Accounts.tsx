@@ -33,6 +33,7 @@ const Accounts = (props: {records: Account[]}) => {
                 <TableRow>
                     <TableHeaderCell>RefId</TableHeaderCell>
                     <TableHeaderCell>Name</TableHeaderCell>
+                    <TableHeaderCell>Balance</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -44,6 +45,7 @@ const Accounts = (props: {records: Account[]}) => {
                             <NavLink to={`/secure/account/${record.id}`}>{record.id}</NavLink>
                         </TableCell>
                         <TableCell key="name">{record.name}</TableCell>
+                        <TableCell key="balance">£ {record.balance}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/secure/account/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>

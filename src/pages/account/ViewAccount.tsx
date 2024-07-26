@@ -2,15 +2,19 @@ import React from 'react';
 import {Await, useLoaderData} from "react-router-dom";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import ViewItemSection from "../ViewItemSection";
-import Transactions from "../transaction/Transactions";
+import SearchTransaction from "./SearchTransaction";
 
 const ViewAccount = () => {
-    return <>
-        <ViewItemSection resource="account"/>
-
+    return <React.Suspense fallback={<OutletContentLoading resource={'account'} />}>
         {/*
         // @ts-ignore */}
-        <React.Suspense fallback={<OutletContentLoading resource="accounts" />}><Await resolve={useLoaderData().transactionsLoader} errorElement={<OutletContentError />}>{(transactionsLoader) => (<Transactions records={transactionsLoader.data} />)}</Await></React.Suspense>
-    </>
+        <Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (
+            <>
+            <ViewItemSection resource="account"/>
+            <SearchTransaction account={itemResponse.data}></SearchTransaction>
+            </>
+        )}
+        </Await>
+    </React.Suspense>
 }
 export default ViewAccount;

@@ -33,6 +33,9 @@ const MonetaApi = {
     list: <T>(resource: string, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
         return execute('GET', `/${resource}`,  onProgress)
     },
+    search: <T>(resource: string,  criteria: any, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
+        return execute('POST', `/${resource}`,  onProgress)
+    },
     create: <T>(resource: string, entity: T, onProgress?: (value: number) => void): Promise<AxiosResponse<T>> => {
         return execute('POST', `/${resource}`, onProgress, entity)
     },

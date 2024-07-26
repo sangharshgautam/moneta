@@ -24,7 +24,7 @@ const ViewItemSection = (props:{ resource: string}) => {
                     <TableHeader>
                         {/*
                             // @ts-ignore */}
-                        {Object.getOwnPropertyNames(itemResponse.data).filter(prop => (typeof itemResponse.data?.[`${prop}`] === 'string') ).map(prop =>
+                        {Object.getOwnPropertyNames(itemResponse.data).filter(prop => (typeof itemResponse.data?.[`${prop}`] === 'string' || typeof itemResponse.data?.[`${prop}`] === 'number') ).map(prop =>
                             <TableRow key={prop}>
                                 <TableHeaderCell>{prop}</TableHeaderCell>
                                 {/*
