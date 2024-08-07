@@ -32,7 +32,7 @@ const Invoices = (props: {records: Invoice[]}) => {
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>RefId</TableHeaderCell>
-                    {/*<TableHeaderCell>Agency</TableHeaderCell>*/}
+                    <TableHeaderCell>Date</TableHeaderCell>
                     {/*<TableHeaderCell>Contract</TableHeaderCell>*/}
 
                     <TableHeaderCell>Start</TableHeaderCell>
@@ -58,6 +58,7 @@ const Invoices = (props: {records: Invoice[]}) => {
                         {/*<TableCell key="contractId">*/}
                         {/*    <NavLink to={`/secure/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
                         {/*</TableCell>*/}
+                        <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="startDate">{record.startDate}</TableCell>
                         <TableCell key="endDate">{record.endDate}</TableCell>
 
@@ -76,7 +77,7 @@ const Invoices = (props: {records: Invoice[]}) => {
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='9'>
+                    <TableHeaderCell colSpan='10'>
                         <Button as={NavLink} to="invoice/add" size='small' primary floated='right'><Icon name='add' />Add Invoice</Button>
                     </TableHeaderCell>
                 </TableRow>

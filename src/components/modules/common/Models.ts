@@ -81,6 +81,7 @@ export interface NewInvoice {
 export interface Invoice {
     id:number|string
     refId: string
+    date: string
     startDate: string
     endDate: string
     status: string
