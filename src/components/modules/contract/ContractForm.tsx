@@ -47,11 +47,11 @@ const ContractForm = <T extends NewContract>(props: {contract: T, handleSubmit: 
             </FormField>
             <FormField>
                 <label>Start Date</label>
-                <input type="date" placeholder='Start data for the contract' value={record.startDate} onChange={(e) => setRecord({...record, startDate: e.target.value})}/>
+                <input type="date" placeholder='Start date for the contract' value={record.startDate} onChange={(e) => setRecord({...record, startDate: e.target.value})}/>
             </FormField>
             <FormField>
                 <label>End Date</label>
-                <input type="date" placeholder='End data for the contract' value={record.endDate} onChange={(e) => setRecord({...record, endDate: e.target.value})}/>
+                <input type="date" placeholder='End date for the contract' value={record.endDate} onChange={(e) => setRecord({...record, endDate: e.target.value})}/>
             </FormField>
             <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
             <Button onClick={handleCancel}>Cancel</Button>

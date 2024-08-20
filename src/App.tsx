@@ -15,6 +15,7 @@ import InvoiceRoutes from "./routes/InvoiceRoutes";
 import ExpenseRoutes from "./routes/ExpenseRoutes";
 import AccountRoutes from "./routes/AccountRoutes";
 import SettingsRoutes from "./routes/SettingsRoutes";
+import ReportRoutes from "./routes/ReportRoutes";
 
 const loadResourceList = async <T,>(resource: string) => {
     console.log(`${resource} List Loader`)
@@ -83,6 +84,7 @@ function App() {
                         InvoiceRoutes(),
                         ExpenseRoutes(),
                         AccountRoutes(),
+                        ReportRoutes(),
                         SettingsRoutes()
                     ]
                 }

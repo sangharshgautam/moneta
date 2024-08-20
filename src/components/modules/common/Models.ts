@@ -106,12 +106,31 @@ export interface Transaction {
     id: number | string
     date: string
     description: string
+    category: string
     type: string
     amount: string
+    balance: string
 }
 export interface Account {
     id: number | string
     name: string
     balance: number
+    transactions: Transaction[]
+}
+export interface Report {
+    openingBalance: number
+    closingBalance: number
+    revenueQ1: number
+    revenueQ2: number
+    revenueQ3: number
+    revenueQ4: number
+    calculatedVATQ1: number
+    calculatedVATQ2: number
+    calculatedVATQ3: number
+    calculatedVATQ4: number
+    paidVATQ1: number
+    paidVATQ2: number
+    paidVATQ3: number
+    paidVATQ4: number
     transactions: Transaction[]
 }
