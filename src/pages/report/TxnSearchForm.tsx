@@ -3,7 +3,7 @@ import {
     Container,
     Dropdown,
     Form,
-    FormField,
+    FormField, FormGroup,
     Header,
     Input,
     Message,
@@ -47,29 +47,21 @@ const TxnSearchForm = (props: TxnSearchProps) => {
         <Header as='h3'>Financial Year</Header>
         <Container>
             <Form>
-                <FormField>
-                    <label>Financial Year</label>
-                    <Dropdown
-                        placeholder='Select'
-                        icon="cog"
-                        className='icon'
-                        labeled button
-                        selection
-                        options={years}
-                        value={year}
-                        onChange={(e, data) => onYearChange(data.value as number)}
-                    />
-                </FormField>
-                {/*<FormField>*/}
-                {/*    <label>Start Date</label>*/}
-                {/*    <input type="date" placeholder='Start date for the contract' value={record.startDate} onChange={(e) => setRecord({...record, startDate: e.target.value})}/>*/}
-                {/*</FormField>*/}
-                {/*<FormField>*/}
-                {/*    <label>End Date</label>*/}
-                {/*    <input type="date" placeholder='End date for the contract' value={record.endDate} onChange={(e) => setRecord({...record, endDate: e.target.value})}/>*/}
-                {/*</FormField>*/}
-                <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
-                {/*<Button onClick={handleCancel}>Cancel</Button>*/}
+                <FormGroup>
+                    <FormField>
+                        <Dropdown
+                            placeholder='Select'
+                            icon="cog"
+                            className='icon'
+                            labeled button
+                            selection
+                            options={years}
+                            value={year}
+                            onChange={(e, data) => onYearChange(data.value as number)}
+                        />
+                    </FormField>
+                    <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
+                </FormGroup>
             </Form>
         </Container>
     </Segment>

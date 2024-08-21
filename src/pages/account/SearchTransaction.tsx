@@ -1,33 +1,20 @@
-import Transactions from "../transaction/Transactions";
 import React, {useEffect, useState} from "react";
 import {Account, Report, Transaction} from "../../components/modules/common/Models";
-import MonetaApi from "../../services/MonetaApi";
-import TxnSearchForm from "../report/TxnSearchForm";
-import {TxnSearchFilters} from "../report/TxnSearchFilters";
-import TxnReconcile from "../report/TxnReconcile";
+import VATReportView from "../report/VATReportView";
+import TxnReport from "../report/TxnReport";
 
 const SearchTransaction = (props: {account: Account}) => {
     const [report, setReport] = useState<Report>({
+        vatReports: [],
+        taxReports: [],
+        transactions: [],
         openingBalance: 0,
-        closingBalance: 0,
-        revenueQ1: 0,
-        revenueQ2: 0,
-        revenueQ3: 0,
-        revenueQ4: 0,
-        calculatedVATQ1: 0,
-        calculatedVATQ2: 0,
-        calculatedVATQ3: 0,
-        calculatedVATQ4: 0,
-        paidVATQ1: 0,
-        paidVATQ2: 0,
-        paidVATQ3: 0,
-        paidVATQ4: 0,
-        transactions: []
+        closingBalance: 0
     })
 
     return <>
-        <TxnReconcile report={report}></TxnReconcile>
-        <Transactions openingBalance={report.openingBalance} closingBalance={report.closingBalance} records={report.transactions} />
+        <VATReportView report={report}></VATReportView>
+        <TxnReport report={report} />
     </>
 }
 export default SearchTransaction;

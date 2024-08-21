@@ -118,19 +118,33 @@ export interface Account {
     transactions: Transaction[]
 }
 export interface Report {
+    vatReports: VATReport[]
+    taxReports: CorpTaxReport[]
+    transactions: Transaction[]
     openingBalance: number
     closingBalance: number
-    revenueQ1: number
-    revenueQ2: number
-    revenueQ3: number
-    revenueQ4: number
-    calculatedVATQ1: number
-    calculatedVATQ2: number
-    calculatedVATQ3: number
-    calculatedVATQ4: number
-    paidVATQ1: number
-    paidVATQ2: number
-    paidVATQ3: number
-    paidVATQ4: number
-    transactions: Transaction[]
+}
+export interface VATReport {
+    quarter: number
+    year: number
+    revenue: number
+    calculatedVAT: number
+    paidVAT: number
+    vatDue: number
+}
+export interface CorpTaxReport {
+    year: number
+    revenue: number
+    calculatedTax: number
+    paidVAT: number
+    staffCosts: number
+    expense: number
+    paidTax: number
+    turnover: Turnover
+    taxDue: number
+    taxOpeningBalance: number
+    taxClosingBalance: number
+}
+export interface Turnover {
+    sales: number
 }

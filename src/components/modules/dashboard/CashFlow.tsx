@@ -1,9 +1,9 @@
 import React from 'react';
-import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from 'recharts';
+import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
 const CashFlow = (props: {records: any[]}) => {
         return (
-            // <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="95%" height={400}>
                 <BarChart
                     width={500}
                     height={300}
@@ -27,7 +27,7 @@ const CashFlow = (props: {records: any[]}) => {
                     <Bar dataKey="employerNI" fill="#06AD74" stackId="deductions"/>
                     <Bar dataKey="incomeTax" fill="#BEF251" stackId="deductions"/>
                 </BarChart>
-            // </ResponsiveContainer>
+            </ResponsiveContainer>
         );
 }
 export default CashFlow;

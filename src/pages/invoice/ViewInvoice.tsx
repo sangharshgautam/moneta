@@ -11,7 +11,7 @@ const ViewInvoice = () => {
 
         {/*
         // @ts-ignore */}
-        <React.Suspense fallback={<OutletContentLoading resource="invoices" />}><Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (<><InvoiceItems records={itemResponse.data.invoiceItems} /><Payments records={itemResponse.data.payments} /></>)}</Await></React.Suspense>
+        <React.Suspense fallback={<OutletContentLoading resource="invoices" />}><Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (<><InvoiceItems records={itemResponse.data.invoiceItems} /><Payments records={itemResponse.data.invoicePayments} /></>)}</Await></React.Suspense>
     </>
 }
 export default ViewInvoice;
