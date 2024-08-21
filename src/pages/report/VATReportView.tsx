@@ -17,9 +17,9 @@ const VATReportView = (props: {report: Report}) => {
                 <TableRow key="header">
                     <TableHeaderCell>Quarter</TableHeaderCell>
                     <TableHeaderCell>Sales</TableHeaderCell>
-                    <TableHeaderCell>VAT Due</TableHeaderCell>
+                    <TableHeaderCell>VAT Calculated</TableHeaderCell>
                     <TableHeaderCell>VAT Paid</TableHeaderCell>
-                    <TableHeaderCell>Due</TableHeaderCell>
+                    <TableHeaderCell>VAT Due (rounded)</TableHeaderCell>
                 </TableRow>
             </TableHeader>
             <TableHeader>

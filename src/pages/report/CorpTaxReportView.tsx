@@ -10,7 +10,7 @@ const CorpTaxReportView = (props: {report: Report}) => {
                 <TableRow key="header">
                     <TableHeaderCell>Year</TableHeaderCell>
                     <TableHeaderCell>Revenue</TableHeaderCell>
-                    <TableHeaderCell>VAT Paid</TableHeaderCell>
+                    <TableHeaderCell>VAT</TableHeaderCell>
                     <TableHeaderCell>Turnover - sales</TableHeaderCell>
                     <TableHeaderCell>Staff Costs</TableHeaderCell>
                     <TableHeaderCell>Other Expense</TableHeaderCell>
@@ -24,8 +24,8 @@ const CorpTaxReportView = (props: {report: Report}) => {
                     <TableRow key={quarterReport.year}>
                         <TableHeaderCell>{quarterReport.year}</TableHeaderCell>
                         <TableCell>£ {quarterReport.revenue}</TableCell>
-                        <TableCell>£ {quarterReport.paidVAT}</TableCell>
-                        <TableCell>£ {quarterReport.turnover.sales}</TableCell>
+                        <TableCell>£ {quarterReport.calculatedVAT}</TableCell>
+                        <TableCell>£ {quarterReport.turnover}</TableCell>
                         <TableCell>£ {quarterReport.staffCosts}</TableCell>
                         <TableCell>£ {quarterReport.expense}</TableCell>
                         <TableCell>£ {quarterReport.calculatedTax}</TableCell>

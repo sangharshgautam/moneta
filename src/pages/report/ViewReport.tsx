@@ -10,7 +10,6 @@ import MonetaApi from "../../services/MonetaApi";
 import TxnReport from "./TxnReport";
 import VATReportView from "./VATReportView";
 import CorpTaxReportView from "./CorpTaxReportView";
-import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import TxnChart from "./TxnChart";
 
 const ViewReport = () => {

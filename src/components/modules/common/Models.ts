@@ -100,7 +100,8 @@ export interface Expense {
     id: number | string
     description: string
     date: string
-    amount: number;
+    amount: number
+    paid: boolean
 }
 export interface Transaction {
     id: number | string
@@ -136,15 +137,13 @@ export interface CorpTaxReport {
     year: number
     revenue: number
     calculatedTax: number
+    calculatedVAT: number
     paidVAT: number
     staffCosts: number
     expense: number
     paidTax: number
-    turnover: Turnover
+    turnover: number
     taxDue: number
     taxOpeningBalance: number
     taxClosingBalance: number
-}
-export interface Turnover {
-    sales: number
 }

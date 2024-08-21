@@ -35,6 +35,7 @@ const Expenses = (props: {records: Expense[]}) => {
                     <TableHeaderCell>Description</TableHeaderCell>
                     <TableHeaderCell>Date</TableHeaderCell>
                     <TableHeaderCell>Amount</TableHeaderCell>
+                    <TableHeaderCell>Paid</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -54,6 +55,7 @@ const Expenses = (props: {records: Expense[]}) => {
                         <TableCell key="description">{record.description}</TableCell>
                         <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="amount">£ {record.amount}</TableCell>
+                        <TableCell key="paid">{JSON.stringify(record.paid)}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/secure/expense/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
