@@ -111,6 +111,7 @@ export interface Transaction {
     type: string
     amount: string
     balance: string
+    approved: boolean
 }
 export interface Account {
     id: number | string
@@ -139,11 +140,15 @@ export interface CorpTaxReport {
     calculatedTax: number
     calculatedVAT: number
     paidVAT: number
+    wages: number
+    travel: number
+    motor: number
     staffCosts: number
     expense: number
     paidTax: number
     turnover: number
     taxDue: number
+    profit: number
     taxOpeningBalance: number
     taxClosingBalance: number
 }

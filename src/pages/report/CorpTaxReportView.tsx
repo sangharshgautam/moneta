@@ -8,29 +8,31 @@ const CorpTaxReportView = (props: {report: Report}) => {
         <Table celled striped>
             <TableHeader>
                 <TableRow key="header">
-                    <TableHeaderCell>Year</TableHeaderCell>
+                    <TableHeaderCell>FY Ending</TableHeaderCell>
                     <TableHeaderCell>Revenue</TableHeaderCell>
                     <TableHeaderCell>VAT</TableHeaderCell>
                     <TableHeaderCell>Turnover - sales</TableHeaderCell>
                     <TableHeaderCell>Staff Costs</TableHeaderCell>
                     <TableHeaderCell>Other Expense</TableHeaderCell>
-                    <TableHeaderCell>Tax Due</TableHeaderCell>
+                    <TableHeaderCell>Tax Calculated</TableHeaderCell>
                     <TableHeaderCell>Tax Paid</TableHeaderCell>
-                    <TableHeaderCell>Due</TableHeaderCell>
+                    <TableHeaderCell>Due (rounded)</TableHeaderCell>
+                    <TableHeaderCell>Profit</TableHeaderCell>
                 </TableRow>
             </TableHeader>
             <TableHeader>
-                {props.report.taxReports.map(quarterReport =>
-                    <TableRow key={quarterReport.year}>
-                        <TableHeaderCell>{quarterReport.year}</TableHeaderCell>
-                        <TableCell>£ {quarterReport.revenue}</TableCell>
-                        <TableCell>£ {quarterReport.calculatedVAT}</TableCell>
-                        <TableCell>£ {quarterReport.turnover}</TableCell>
-                        <TableCell>£ {quarterReport.staffCosts}</TableCell>
-                        <TableCell>£ {quarterReport.expense}</TableCell>
-                        <TableCell>£ {quarterReport.calculatedTax}</TableCell>
-                        <TableCell>£ {quarterReport.paidTax}</TableCell>
-                        <TableCell>£ {quarterReport.taxDue}</TableCell>
+                {props.report.taxReports.map(yearReport =>
+                    <TableRow key={yearReport.year}>
+                        <TableHeaderCell>{yearReport.year}</TableHeaderCell>
+                        <TableCell>£ {yearReport.revenue}</TableCell>
+                        <TableCell>£ {yearReport.calculatedVAT}</TableCell>
+                        <TableCell>£ {yearReport.turnover}</TableCell>
+                        <TableCell>£ {yearReport.staffCosts}</TableCell>
+                        <TableCell>£ {yearReport.expense}</TableCell>
+                        <TableCell>£ {yearReport.calculatedTax}</TableCell>
+                        <TableCell>£ {yearReport.paidTax}</TableCell>
+                        <TableCell>£ {yearReport.taxDue}</TableCell>
+                        <TableCell>£ {yearReport.profit}</TableCell>
                     </TableRow>
                 )}
             </TableHeader>

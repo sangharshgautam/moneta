@@ -29,7 +29,10 @@ const TxnReport = (props: {report: Report}) => {
     const getAmount = (type: string, record: Transaction) => {
         return record.type === type ? '£ '+record.amount: '';
     }
-    return  <Segment basic>
+    const approved = (txn: Transaction) => {
+        return txn.approved ? <Icon color='green' name='checkmark' size='large' /> : <Icon color='red' name='close' size='large' />
+    }
+    return <Segment basic>
         <Header as='h3'>Transactions</Header>
         <Table celled striped>
             <TableHeader>
@@ -40,6 +43,7 @@ const TxnReport = (props: {report: Report}) => {
                     <TableHeaderCell>Description</TableHeaderCell>
                     <TableHeaderCell>IN</TableHeaderCell>
                     <TableHeaderCell>OUT</TableHeaderCell>
+                    <TableHeaderCell>Approved</TableHeaderCell>
                     <TableHeaderCell>Balance</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
                 </TableRow>
@@ -53,9 +57,9 @@ const TxnReport = (props: {report: Report}) => {
                     <TableCell>OPENING BALANCE</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
+                    <TableBody></TableBody>
                     <TableCell>{props.report.openingBalance}</TableCell>
-                    <TableBody></TableBody>
-                    <TableBody></TableBody>
+                    <TableCell></TableCell>
                 </TableRow>
                 {props.report.transactions.map(record =>
                     <TableRow key={record.id}>
@@ -67,13 +71,18 @@ const TxnReport = (props: {report: Report}) => {
                         <TableCell key="description">{record.description}</TableCell>
                         <TableCell key="in">{getAmount('IN', record)}</TableCell>
                         <TableCell key="out">{getAmount('OUT', record)}</TableCell>
-                        <TableCell key="amount">£ {record.balance}</TableCell>
-                        <TableCell key="action">
-                            <Button as={NavLink} to={`/secure/transaction/${record.id}/edit`} size='small' positive icon="edit"></Button>
-                            <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
+                        <TableCell>
+                            {approved(record)}
                         </TableCell>
+                        <TableCell key="amount">£ {record.balance}</TableCell>
+                            <TableCell key="action">
+                                <Button as={NavLink} to={`/secure/transaction/${record.id}/edit`} size='small' positive
+                                        icon="edit"></Button>
+                                <Button size='small' negative icon="trash"
+                                        onClick={() => handleDelete(record.id)}></Button>
+                            </TableCell>
                     </TableRow>
-                )
+                    )
                 }
                 <TableRow>
                     <TableCell></TableCell>
@@ -82,6 +91,7 @@ const TxnReport = (props: {report: Report}) => {
                     <TableCell>CLOSING BALANCE</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
+                    <TableBody></TableBody>
                     <TableCell>{props.report.closingBalance}</TableCell>
                     <TableCell></TableCell>
                 </TableRow>

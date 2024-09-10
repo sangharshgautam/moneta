@@ -11,6 +11,7 @@ import TxnReport from "./TxnReport";
 import VATReportView from "./VATReportView";
 import CorpTaxReportView from "./CorpTaxReportView";
 import TxnChart from "./TxnChart";
+import IncomeReport from "./IncomeReport";
 
 const ViewReport = () => {
     const [account, setAccount] = useState<Account>()
@@ -49,7 +50,8 @@ const ViewReport = () => {
             <>
                 <ViewItemSection resource="account"/>
                 <TxnSearchForm startDate={txnFilters.startDate} endDate={txnFilters.endDate} handleSubmit={handleSubmit}></TxnSearchForm>
-                <TxnChart report={report}></TxnChart>
+                <IncomeReport report={report}></IncomeReport>
+                {/*<TxnChart report={report}></TxnChart>*/}
                 <Segment basic>
                     <Tab panes={panes} />
                 </Segment>
