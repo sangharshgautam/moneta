@@ -39,7 +39,7 @@ const ViewReport = () => {
     // @ts-ignore
     useLoaderData().itemResponse.then(resp => setAccount(resp.data));
     const panes = [
-        { menuItem: 'Transaction', render: () => <TabPane><TxnReport report={report}></TxnReport></TabPane> },
+        // { menuItem: 'Transaction', render: () => <TabPane><TxnReport report={report}></TxnReport></TabPane> },
         { menuItem: 'VAT', render: () => <TabPane><VATReportView report={report}></VATReportView></TabPane> },
         { menuItem: 'Tax', render: () => <TabPane><CorpTaxReportView report={report}></CorpTaxReportView></TabPane> },
     ]
@@ -50,7 +50,7 @@ const ViewReport = () => {
             <>
                 <ViewItemSection resource="account"/>
                 <TxnSearchForm startDate={txnFilters.startDate} endDate={txnFilters.endDate} handleSubmit={handleSubmit}></TxnSearchForm>
-                <IncomeReport report={report}></IncomeReport>
+                {/*<IncomeReport report={report}></IncomeReport>*/}
                 {/*<TxnChart report={report}></TxnChart>*/}
                 <Segment basic>
                     <Tab panes={panes} />

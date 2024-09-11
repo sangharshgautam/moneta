@@ -151,4 +151,7 @@ export interface CorpTaxReport {
     profit: number
     taxOpeningBalance: number
     taxClosingBalance: number
+    staffCost: Expense[]
+    depreciation: Expense[]
+    other: Expense[]
 }
