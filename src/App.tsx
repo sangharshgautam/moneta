@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {createBrowserRouter, defer, Outlet, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, defer, NavLink, Outlet, RouterProvider} from "react-router-dom";
 import UnAuthenticated from "./components/UnAuthenticated";
 import ProtectedRoute from "./ProtectedRoute";
 import GoogleApi from "./services/GoogleApi";
@@ -16,12 +16,35 @@ import ExpenseRoutes from "./routes/ExpenseRoutes";
 import AccountRoutes from "./routes/AccountRoutes";
 import SettingsRoutes from "./routes/SettingsRoutes";
 import ReportRoutes from "./routes/ReportRoutes";
+import {useAuth} from "react-oidc-context";
+import {ApolloClient, ApolloProvider, createHttpLink, InMemoryCache} from "@apollo/client";
+import {setContext} from "@apollo/client/link/context";
+import {Header, Segment, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "semantic-ui-react";
 
 const loadResourceList = async <T,>(resource: string) => {
     console.log(`${resource} List Loader`)
     return MonetaApi.list<T>(resource)
 }
+const httpLink = createHttpLink({
+    uri: 'https://gql.waveapps.com/graphql/public',
+});
 
+const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token = localStorage.getItem('token') || 'ZZZZ';
+    // return the headers to the context so httpLink can read them
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : "",
+        }
+    }
+});
+
+const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache()
+});
 function App() {
 
     const [user, setUser] = useState<any | null>(null);
@@ -40,60 +63,75 @@ function App() {
     );
     const router = createBrowserRouter([
         {
-            element: <h1>Moneta</h1>,
-            path: "/"
-        },
-        {
-            element: <Outlet/>,
+            element: <ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>,
             path: "/",
+            handle: {
+                crumb: () => "home"
+            },
+            errorElement: <OutletContentError/>,
             children: [
                 {
-                    index: true,
-                    element: <UnAuthenticated user={user} setUser={setUser}/>
+                    index: true, element: <Dashboard />,
+                    loader: async () => {
+                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                    },
+                    handle: {
+                        crumb: () => "dashboard"
+                    }
                 },
                 {
-                    path: 'secure/*',
-                    element: <ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>,
-                    handle: {
-                        crumb: () => "home"
+                    path: 'dashboard', element: <Dashboard/>,
+                    loader: async () => {
+                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
                     },
-                    errorElement: <OutletContentError/>,
-                    children: [
-                        {
-                            index: true, element: <Dashboard />,
-                            loader: async () => {
-                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
-                            },
-                            handle: {
-                                crumb: () => "dashboard"
-                            }
-                        },
-                        {
-                            path: 'dashboard', element: <Dashboard/>,
-                            loader: async () => {
-                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
-                            },
-                            handle: {
-                                crumb: () => "dashboard"
-                            }
-                        },
-                        AgencyRoutes(),
-                        ContractRoutes(),
-                        ServiceRoutes(),
-                        TimesheetRoutes(),
-                        InvoiceRoutes(),
-                        ExpenseRoutes(),
-                        AccountRoutes(),
-                        ReportRoutes(),
-                        SettingsRoutes()
-                    ]
-                }
-            ],
-        },
+                    handle: {
+                        crumb: () => "dashboard"
+                    }
+                },
+                AgencyRoutes(),
+                ContractRoutes(),
+                ServiceRoutes(),
+                TimesheetRoutes(),
+                InvoiceRoutes(),
+                ExpenseRoutes(),
+                AccountRoutes(),
+                ReportRoutes(),
+                SettingsRoutes()
+            ]
+        }
     ], {
         basename: '/moneta'
     });
-    return <RouterProvider router={router} />
+    const auth = useAuth();
+
+    switch (auth.activeNavigator) {
+        case "signinSilent":
+            return <div>Signing you in...</div>;
+        case "signoutRedirect":
+            return <div>Signing you out...</div>;
+    }
+
+    if (auth.isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (auth.error) {
+        return <div>Oops... {auth.error.message}</div>;
+    }
+
+    if (auth.isAuthenticated) {
+        return (
+            // <div>
+            //     Hello {auth.user?.profile.sub}{" "}
+            //     <button onClick={() => void auth.removeUser()}>Log out</button>
+            // </div>
+            <ApolloProvider client={client}>
+                <RouterProvider router={router} />
+            </ApolloProvider>
+        );
+    }
+
+    return <button onClick={() => void auth.signinRedirect()}>Log in</button>;
 }
 
 export default App;

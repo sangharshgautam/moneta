@@ -3,11 +3,14 @@ import AppLayout from "./components/AppLayout";
 import {Header} from "semantic-ui-react";
 import React from "react";
 import {Navigate} from "react-router-dom";
+import {useAuth} from "react-oidc-context";
 
 const ProtectedRoute = (props: {user: any, profile: any, setProfile: (profile: any) =>  void}) => {
-    if (!props.user) {
-        return <Navigate to="/secure" replace />;
-    }
+    const auth = useAuth();
+
+    // if (!props.user) {
+    //     return <Navigate to="/secure" replace />;
+    // }
     return(
     <section className="App">
         <header>

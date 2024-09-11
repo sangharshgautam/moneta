@@ -7,6 +7,8 @@ import EditServicePage from "../pages/service/EditServicePage";
 import AddService from "../components/modules/service/AddService";
 import ViewServicePage from "../pages/service/ViewServicePage";
 import React from "react";
+import ViewList from "../ViewList";
+import {GET_CUSTOMERS, GET_SERVICES} from "../services/Wave";
 
 const ServiceRoutes = (): RouteObject => {
     return {
@@ -16,10 +18,10 @@ const ServiceRoutes = (): RouteObject => {
         },
         children: [
             {
-                index: true, element: <ServicesPage/>,
-                loader: async () => {
-                    return defer({listResponse: loadResourceList<Service[]>('service')})
-                }
+                index: true, element: <ViewList object="products" keys={['id', 'name', 'description']} query={GET_SERVICES}/>,
+                // loader: async () => {
+                //     return defer({listResponse: loadResourceList<Service[]>('service')})
+                // }
             },
             {path: 'add', element: <AddContract/>},
             {
