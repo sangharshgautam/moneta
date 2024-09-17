@@ -11,7 +11,7 @@ const ViewAccount = () => {
         <Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (
             <>
             <ViewItemSection resource="account"/>
-            <SearchTransaction account={itemResponse.data}></SearchTransaction>
+            <SearchTransaction></SearchTransaction>
             </>
         )}
         </Await>

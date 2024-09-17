@@ -1,10 +1,9 @@
-import {AccountsPage, ReportsPage} from "../pages/LazyOutlet";
+import {ReportsPage} from "../pages/LazyOutlet";
 import {defer, RouteObject} from "react-router-dom";
-import {Account, Invoice, Transaction} from "../components/modules/common/Models";
+import {Account} from "../components/modules/common/Models";
 import AddContract from "../components/modules/contract/AddContract";
 import {loadResource, loadResourceList} from "../Constants";
 import React from "react";
-import ViewAccount from "../pages/account/ViewAccount";
 import ViewReport from "../pages/report/ViewReport";
 
 const ReportRoutes = (): RouteObject => {

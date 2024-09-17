@@ -50,7 +50,7 @@ const ViewReport = () => {
                 <ViewItemSection resource="account"/>
                 <TxnSearchForm startDate={txnFilters.startDate} endDate={txnFilters.endDate} handleSubmit={handleSubmit}></TxnSearchForm>
                 {/*<IncomeReport report={report}></IncomeReport>*/}
-                {/*<TxnChart report={report}></TxnChart>*/}
+                <TxnChart report={report}></TxnChart>
                 <Segment basic>
                     <Tab panes={panes} />
                 </Segment>

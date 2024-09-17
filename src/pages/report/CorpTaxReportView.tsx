@@ -1,9 +1,17 @@
 import React, {useState} from "react";
-import {CorpTaxReport, Expense, ExpenseDTO, Report} from "../../components/modules/common/Models";
+import {CorpTaxReport, ExpenseDTO, Report} from "../../components/modules/common/Models";
 import {
-    Button, Grid, GridColumn, GridRow,
-    Header, Image,
-    Modal, ModalActions, ModalContent, ModalDescription, ModalHeader,
+    Button,
+    Grid,
+    GridColumn,
+    GridRow,
+    Header,
+    Image,
+    Modal,
+    ModalActions,
+    ModalContent,
+    ModalDescription,
+    ModalHeader,
     Segment,
     Table,
     TableCell,
@@ -11,7 +19,6 @@ import {
     TableHeaderCell,
     TableRow
 } from "semantic-ui-react";
-import {NavLink} from "react-router-dom";
 
 const CorpTaxReportView = (props: {report: Report}) => {
     const [yearReport, setYearReport] = useState<CorpTaxReport>();
@@ -26,21 +33,6 @@ const CorpTaxReportView = (props: {report: Report}) => {
             return Math.round(arr.reduce((sum, prop) => sum + prop.amount, 0));
         }
         return 0
-    }
-    const depreciation = () => {
-        // @ts-ignore
-        return Math.round(sum(yearReport?.projected.depreciation));
-    }
-    const taxable = () => {
-        // @ts-ignore
-        const val = yearReport?.projected.turnover - sum(yearReport?.projected.staffCosts) - sum(yearReport?.other);
-        return Math.round(val);
-    }
-    const tax = () => {
-        return Math.round(taxable() * 19/100);
-    }
-    const profit = () => {
-        return Math.round(taxable() - tax() - depreciation());
     }
     const displayValue = (amount: number) => {
         return amount === 0 ? '-' : '£ '+amount;

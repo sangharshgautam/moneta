@@ -2,8 +2,6 @@ import TopNavBar from "./components/TopNavBar";
 import AppLayout from "./components/AppLayout";
 import {Header} from "semantic-ui-react";
 import React from "react";
-import {Navigate} from "react-router-dom";
-import {useAuth} from "react-oidc-context";
 
 const ProtectedRoute = () => {
 
