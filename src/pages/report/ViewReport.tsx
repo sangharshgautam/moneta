@@ -11,7 +11,6 @@ import TxnReport from "./TxnReport";
 import VATReportView from "./VATReportView";
 import CorpTaxReportView from "./CorpTaxReportView";
 import TxnChart from "./TxnChart";
-import IncomeReport from "./IncomeReport";
 
 const ViewReport = () => {
     const [account, setAccount] = useState<Account>()
@@ -39,7 +38,7 @@ const ViewReport = () => {
     // @ts-ignore
     useLoaderData().itemResponse.then(resp => setAccount(resp.data));
     const panes = [
-        // { menuItem: 'Transaction', render: () => <TabPane><TxnReport report={report}></TxnReport></TabPane> },
+        { menuItem: 'Transaction', render: () => <TabPane><TxnReport report={report}></TxnReport></TabPane> },
         { menuItem: 'VAT', render: () => <TabPane><VATReportView report={report}></VATReportView></TabPane> },
         { menuItem: 'Tax', render: () => <TabPane><CorpTaxReportView report={report}></CorpTaxReportView></TabPane> },
     ]

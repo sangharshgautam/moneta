@@ -14,7 +14,7 @@ const VATReportView = (props: {report: Report}) => {
         <Header as='h3'>VAT</Header>
         <Table celled striped>
             <TableHeader>
-                <TableRow key="header">
+                <TableRow>
                     <TableHeaderCell>Quarter</TableHeaderCell>
                     <TableHeaderCell>Sales</TableHeaderCell>
                     <TableHeaderCell>VAT Calculated</TableHeaderCell>
@@ -24,7 +24,7 @@ const VATReportView = (props: {report: Report}) => {
             </TableHeader>
             <TableHeader>
                 {props.report.vatReports.map(quarterReport =>
-                    <TableRow key={quarterReport.quarter}>
+                    <TableRow key={quarterReport.yearMonth}>
                         <TableHeaderCell>Q{quarterReport.quarter} {quarterReport.year}</TableHeaderCell>
                         <TableCell>£ {quarterReport.revenue}</TableCell>
                         <TableCell>£ {quarterReport.calculatedVAT}</TableCell>

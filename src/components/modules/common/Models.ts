@@ -127,6 +127,7 @@ export interface Report {
     closingBalance: number
 }
 export interface VATReport {
+    yearMonth: string
     quarter: number
     year: number
     revenue: number
@@ -134,24 +135,42 @@ export interface VATReport {
     paidVAT: number
     vatDue: number
 }
-export interface CorpTaxReport {
-    year: number
-    revenue: number
+export interface ExpenseDTO {
+    description: string
+    amount: number
+    actualTax: number
     calculatedTax: number
-    calculatedVAT: number
     paidVAT: number
     wages: number
     travel: number
     motor: number
-    staffCosts: number
+    staffCost: number
     expense: number
     paidTax: number
-    turnover: number
     taxDue: number
     profit: number
+    calculated: number
+}
+export interface TaxReport {
+    revenue: number
+    vat: number
+    tax: number
+    paidTax: number
+    taxDue: number
+    balance: number
+    profitBeforeTax: number
+    profitAfterTax: number
+    turnover: number
+    staffCost: number
+    depreciation: ExpenseDTO[]
+    staffCosts: ExpenseDTO[]
+    other: ExpenseDTO[]
+}
+export interface CorpTaxReport {
+    year: number
+    projected: TaxReport
+    actual: TaxReport
     taxOpeningBalance: number
     taxClosingBalance: number
-    staffCost: Expense[]
-    depreciation: Expense[]
-    other: Expense[]
+
 }

@@ -61,7 +61,7 @@ const TxnReport = (props: {report: Report}) => {
                     <TableCell>{props.report.openingBalance}</TableCell>
                     <TableCell></TableCell>
                 </TableRow>
-                {props.report.transactions.map(record =>
+                {props.report.transactions.filter(record  => record.approved).map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
                             <NavLink to={`/secure/transaction/${record.id}`}>{record.id}</NavLink>
