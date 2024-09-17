@@ -1,15 +1,14 @@
 import {Image, Menu, Segment} from 'semantic-ui-react'
 import {useState} from "react";
 import {googleLogout} from "@react-oauth/google";
+import {useAuth} from "react-oidc-context";
 
-const TopNavBar = (props: {user: any, profile: any, setProfile: (profile: any) =>  void}) => {
+const TopNavBar = () => {
+
+    const auth = useAuth();
+    console.log(auth.user?.access_token)
     const [activeItem,setActiveItem]= useState<string>("home")
     const handleItemClick = (name: string) => setActiveItem(name)
-    // log out function to log the user out of google and set the profile array to null
-    const logOut = () => {
-        googleLogout();
-        props.setProfile(null);
-    };
 
     return <Segment inverted attached size='mini'>
         <Menu inverted secondary>
@@ -37,14 +36,14 @@ const TopNavBar = (props: {user: any, profile: any, setProfile: (profile: any) =
                 onClick={() => handleItemClick('friends')}
             />
 
-            {props.profile && <Menu.Item
+            {auth.user && <Menu.Item
                 name='logout'
                 active={activeItem === 'logout'}
-                onClick={() => logOut()}
+                onClick={() => auth.removeUser()}
                 position="right"
             />
             }
-            {!props.profile && <Menu.Item
+            {!auth.user && <Menu.Item
                 name='login'
                 active={activeItem === 'login'}
                 onClick={() => handleItemClick('login')}
@@ -53,10 +52,10 @@ const TopNavBar = (props: {user: any, profile: any, setProfile: (profile: any) =
 
             {/*<div className="ui horizontal list">*/}
                 <div className="item">
-                    <Image className="ui mini circular image" src={props.profile?.picture} alt="profile picture"/>
+                    <Image className="ui mini circular image" src={auth.user?.profile?.picture} alt="profile picture"/>
                     <div className="content">
                         {/*<div className="ui sub header">Molly</div>*/}
-                        {props.profile?.given_name}
+                        {auth.user?.profile?.given_name}
                     </div>
                 </div>
             {/*</div>*/}

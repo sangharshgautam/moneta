@@ -42,12 +42,12 @@ const Accounts = (props: {records: Account[]}) => {
                 {props.records.map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/secure/account/${record.id}`}>{record.id}</NavLink>
+                            <NavLink to={`/account/${record.id}`}>{record.id}</NavLink>
                         </TableCell>
                         <TableCell key="name">{record.name}</TableCell>
                         <TableCell key="balance">£ {record.balance}</TableCell>
                         <TableCell key="action">
-                            <Button as={NavLink} to={`/secure/account/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                            <Button as={NavLink} to={`/account/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                         </TableCell>
                     </TableRow>

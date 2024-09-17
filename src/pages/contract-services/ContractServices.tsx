@@ -45,11 +45,11 @@ const ContractServices = (props: React.PropsWithChildren<ServicesProps>) => {
             <TableBody>
                 {props.records.map(record => <TableRow key={record.service.id}>
                     <TableCell key="name">
-                        <NavLink to={`/secure/service/${record.service.id}`}>{record.service.name}</NavLink>
+                        <NavLink to={`/service/${record.service.id}`}>{record.service.name}</NavLink>
                     </TableCell>
                     <TableCell key="rate">{record.rate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/secure/service/${record.service.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/service/${record.service.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

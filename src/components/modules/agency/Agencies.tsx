@@ -47,7 +47,7 @@ const Agencies = (props: {records: Agency[]}) => {
                     <TableCell key="contact">{record.contact}</TableCell>
                     <TableCell key="website">{record.website}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/secure/agency/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/agency/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

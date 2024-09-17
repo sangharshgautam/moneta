@@ -64,7 +64,7 @@ const TxnReport = (props: {report: Report}) => {
                 {props.report.transactions.filter(record  => record.approved).map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/secure/transaction/${record.id}`}>{record.id}</NavLink>
+                            <NavLink to={`/transaction/${record.id}`}>{record.id}</NavLink>
                         </TableCell>
                         <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="category">{record.category}</TableCell>
@@ -76,7 +76,7 @@ const TxnReport = (props: {report: Report}) => {
                         </TableCell>
                         <TableCell key="amount">£ {record.balance}</TableCell>
                             <TableCell key="action">
-                                <Button as={NavLink} to={`/secure/transaction/${record.id}/edit`} size='small' positive
+                                <Button as={NavLink} to={`/transaction/${record.id}/edit`} size='small' positive
                                         icon="edit"></Button>
                                 <Button size='small' negative icon="trash"
                                         onClick={() => handleDelete(record.id)}></Button>

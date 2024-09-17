@@ -50,13 +50,13 @@ const Invoices = (props: {records: Invoice[]}) => {
                 {props.records.map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/secure/invoice/${record.id}`}>{record.refId}</NavLink>
+                            <NavLink to={`/invoice/${record.id}`}>{record.refId}</NavLink>
                         </TableCell>
                         {/*<TableCell key="service">*/}
-                        {/*    <NavLink to={`/secure/agency/${record.contractService.contract.agency.id}`}>{record.contractService.contract.agency.name}</NavLink>*/}
+                        {/*    <NavLink to={`/agency/${record.contractService.contract.agency.id}`}>{record.contractService.contract.agency.name}</NavLink>*/}
                         {/*</TableCell>*/}
                         {/*<TableCell key="contractId">*/}
-                        {/*    <NavLink to={`/secure/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
+                        {/*    <NavLink to={`/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
                         {/*</TableCell>*/}
                         <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="startDate">{record.startDate}</TableCell>
@@ -68,7 +68,7 @@ const Invoices = (props: {records: Invoice[]}) => {
                         <TableCell key="total">£ {record.total}</TableCell>
                         <TableCell key="due">£ {record.due}</TableCell>
                         <TableCell key="action">
-                            <Button as={NavLink} to={`/secure/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                            <Button as={NavLink} to={`/timesheet/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                         </TableCell>
                     </TableRow>

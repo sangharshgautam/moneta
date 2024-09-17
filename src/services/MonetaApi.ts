@@ -1,12 +1,14 @@
 import axios, {AxiosProgressEvent, AxiosResponse} from "axios";
 import {Identifier} from "../components/modules/common/Models";
+import {getUser} from "../Constants";
 
 const monetaClient = axios.create({
     baseURL: process.env.REACT_APP_MONETA_API_BASE_URL || 'https://moneta-api-l6fp.onrender.com',
     timeout: 20000
 })
 monetaClient.interceptors.request.use((config) => {
-    const accessToken = localStorage.getItem("accessToken")
+    const user = getUser();
+    const accessToken = user?.access_token;
     config.headers.set('Authorization',  `Bearer ${accessToken}`)
     return config
 })

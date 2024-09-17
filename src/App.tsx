@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
-import {createBrowserRouter, defer, Outlet, RouterProvider} from "react-router-dom";
-import UnAuthenticated from "./components/UnAuthenticated";
+import {createBrowserRouter, defer, RouterProvider} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import GoogleApi from "./services/GoogleApi";
 import MonetaApi from "./services/MonetaApi";
 import {Timesheet} from "./components/modules/common/Models";
 import {Dashboard, OutletContentError} from "./pages/LazyOutlet";
@@ -16,6 +14,7 @@ import ExpenseRoutes from "./routes/ExpenseRoutes";
 import AccountRoutes from "./routes/AccountRoutes";
 import SettingsRoutes from "./routes/SettingsRoutes";
 import ReportRoutes from "./routes/ReportRoutes";
+import {useAuth} from "react-oidc-context";
 
 const loadResourceList = async <T,>(resource: string) => {
     console.log(`${resource} List Loader`)
@@ -24,76 +23,75 @@ const loadResourceList = async <T,>(resource: string) => {
 
 function App() {
 
-    const [user, setUser] = useState<any | null>(null);
-    const [profile, setProfile] = useState<any | null>(null);
-    useEffect(
-        () => {
-            if (user) {
-                GoogleApi.getUserInfo()
-                    .then((res: any) => {
-                        setProfile(res.data);
-                    })
-                    .catch((err: any) => console.log(err));
-            }
-        },
-        [ user ]
-    );
+    const auth =useAuth()
     const router = createBrowserRouter([
         {
-            element: <h1>Moneta</h1>,
-            path: "/"
-        },
-        {
-            element: <Outlet/>,
+            element: <ProtectedRoute/>,
             path: "/",
+            handle: {
+                crumb: () => "home"
+            },
+            errorElement: <OutletContentError/>,
             children: [
                 {
-                    index: true,
-                    element: <UnAuthenticated user={user} setUser={setUser}/>
+                    index: true, element: <Dashboard />,
+                    loader: async () => {
+                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                    },
+                    handle: {
+                        crumb: () => "dashboard"
+                    }
                 },
                 {
-                    path: 'secure/*',
-                    element: <ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>,
-                    handle: {
-                        crumb: () => "home"
+                    path: 'dashboard', element: <Dashboard/>,
+                    loader: async () => {
+                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
                     },
-                    errorElement: <OutletContentError/>,
-                    children: [
-                        {
-                            index: true, element: <Dashboard />,
-                            loader: async () => {
-                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
-                            },
-                            handle: {
-                                crumb: () => "dashboard"
-                            }
-                        },
-                        {
-                            path: 'dashboard', element: <Dashboard/>,
-                            loader: async () => {
-                                return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
-                            },
-                            handle: {
-                                crumb: () => "dashboard"
-                            }
-                        },
-                        AgencyRoutes(),
-                        ContractRoutes(),
-                        ServiceRoutes(),
-                        TimesheetRoutes(),
-                        InvoiceRoutes(),
-                        ExpenseRoutes(),
-                        AccountRoutes(),
-                        ReportRoutes(),
-                        SettingsRoutes()
-                    ]
-                }
-            ],
-        },
+                    handle: {
+                        crumb: () => "dashboard"
+                    }
+                },
+                AgencyRoutes(),
+                ContractRoutes(),
+                ServiceRoutes(),
+                TimesheetRoutes(),
+                InvoiceRoutes(),
+                ExpenseRoutes(),
+                AccountRoutes(),
+                ReportRoutes(),
+                SettingsRoutes()
+            ]
+        }
     ], {
         basename: '/moneta'
     });
-    return <RouterProvider router={router} />
+
+    switch (auth.activeNavigator) {
+        case "signinSilent":
+            return <div>Signing you in...</div>;
+        case "signoutRedirect":
+            return <div>Signing you out...</div>;
+    }
+
+    if (auth.isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (auth.error) {
+        return <div>Oops... {auth.error.message}</div>;
+    }
+
+    if (auth.isAuthenticated) {
+        return (
+            // <div>
+            //     Hello {auth.user?.profile.sub}{" "}
+            //     <button onClick={() => void auth.removeUser()}>Log out</button>
+            // </div>
+            <RouterProvider router={router} />
+        );
+    }
+
+    return <button onClick={() => void auth.signinRedirect()}>Log in</button>;
 }
 
 export default App;

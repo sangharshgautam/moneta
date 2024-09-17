@@ -44,20 +44,20 @@ const Expenses = (props: {records: Expense[]}) => {
                 {props.records.map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/secure/invoice/${record.id}`}>{record.id}</NavLink>
+                            <NavLink to={`/expense/${record.id}`}>{record.id}</NavLink>
                         </TableCell>
                         {/*<TableCell key="service">*/}
-                        {/*    <NavLink to={`/secure/agency/${record.contractService.contract.agency.id}`}>{record.contractService.contract.agency.name}</NavLink>*/}
+                        {/*    <NavLink to={`/agency/${record.contractService.contract.agency.id}`}>{record.contractService.contract.agency.name}</NavLink>*/}
                         {/*</TableCell>*/}
                         {/*<TableCell key="contractId">*/}
-                        {/*    <NavLink to={`/secure/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
+                        {/*    <NavLink to={`/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
                         {/*</TableCell>*/}
                         <TableCell key="description">{record.description}</TableCell>
                         <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="amount">£ {record.amount}</TableCell>
                         <TableCell key="paid">{JSON.stringify(record.paid)}</TableCell>
                         <TableCell key="action">
-                            <Button as={NavLink} to={`/secure/expense/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                            <Button as={NavLink} to={`/expense/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                         </TableCell>
                     </TableRow>

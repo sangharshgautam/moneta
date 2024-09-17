@@ -44,10 +44,10 @@ const Services = (props: React.PropsWithChildren<ServicesProps>) => {
             <TableBody>
                 {props.records.map(record => <TableRow key={record.id}>
                     <TableCell key="name">
-                        <NavLink to={`/secure/service/${record.id}`}>{record.name}</NavLink>
+                        <NavLink to={`/service/${record.id}`}>{record.name}</NavLink>
                     </TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/secure/service/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/service/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

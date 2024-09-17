@@ -42,12 +42,12 @@ const Payments = (props: {records: Payment[]}) => {
                 {props.records.map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/secure/payment/${record.id}`}>{record.id}</NavLink>
+                            <NavLink to={`/payment/${record.id}`}>{record.id}</NavLink>
                         </TableCell>
                         <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="amount">£ {record.amount}</TableCell>
                         <TableCell key="action">
-                            <Button as={NavLink} to={`/secure/payment/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                            <Button as={NavLink} to={`/payment/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                         </TableCell>
                     </TableRow>
