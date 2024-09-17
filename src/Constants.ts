@@ -13,6 +13,7 @@ export const getUser = () => {
     return User.fromStorageString(oidcStorage);
 }
 
+
 export const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
     return MonetaApi.get<T>(resource, id)
 }
