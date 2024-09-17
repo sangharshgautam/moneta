@@ -43,15 +43,20 @@ const ViewReport = () => {
         { menuItem: 'Tax', render: () => <TabPane><CorpTaxReportView report={report}></CorpTaxReportView></TabPane> },
     ]
     return <React.Suspense fallback={<OutletContentLoading resource={'account'} />}>
-        <>
-            <ViewItemSection resource="account"/>
-            <TxnSearchForm startDate={txnFilters.startDate} endDate={txnFilters.endDate} handleSubmit={handleSubmit}></TxnSearchForm>
-            {/*<IncomeReport report={report}></IncomeReport>*/}
-            <TxnChart report={report}></TxnChart>
-            <Segment basic>
-                <Tab panes={panes} />
-            </Segment>
-        </>
+        {/*
+        // @ts-ignore */}
+        <Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (
+            <>
+                <ViewItemSection resource="account"/>
+                <TxnSearchForm startDate={txnFilters.startDate} endDate={txnFilters.endDate} handleSubmit={handleSubmit}></TxnSearchForm>
+                {/*<IncomeReport report={report}></IncomeReport>*/}
+                <TxnChart report={report}></TxnChart>
+                <Segment basic>
+                    <Tab panes={panes} />
+                </Segment>
+            </>
+        )}
+        </Await>
     </React.Suspense>
 }
 export default ViewReport
