@@ -32,9 +32,8 @@ const ViewReport = () => {
             )
         }
     }
-    useEffect(() => {
-        handleSubmit(txnFilters);
-    }, [account])
+    // @ts-ignore
+    useEffect(() => handleSubmit(txnFilters), [account])
     // @ts-ignore
     useLoaderData().itemResponse.then(resp => setAccount(resp.data));
     const panes = [
