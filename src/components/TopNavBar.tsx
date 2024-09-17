@@ -1,12 +1,10 @@
 import {Image, Menu, Segment} from 'semantic-ui-react'
 import {useState} from "react";
-import {googleLogout} from "@react-oauth/google";
 import {useAuth} from "react-oidc-context";
 
 const TopNavBar = () => {
 
     const auth = useAuth();
-    console.log(auth.user?.access_token)
     const [activeItem,setActiveItem]= useState<string>("home")
     const handleItemClick = (name: string) => setActiveItem(name)
 
