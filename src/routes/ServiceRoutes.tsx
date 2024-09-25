@@ -6,9 +6,11 @@ import {loadResource, loadResourceList} from "../Constants";
 import EditServicePage from "../pages/service/EditServicePage";
 import AddService from "../components/modules/service/AddService";
 import ViewServicePage from "../pages/service/ViewServicePage";
-import React from "react";
+import React, {useContext} from "react";
+import {BusinessContext} from "../App";
 
 const ServiceRoutes = (): RouteObject => {
+    const businessId = useContext(BusinessContext);
     return {
         path: 'service',
         handle: {
@@ -18,14 +20,14 @@ const ServiceRoutes = (): RouteObject => {
             {
                 index: true, element: <ServicesPage/>,
                 loader: async () => {
-                    return defer({listResponse: loadResourceList<Service[]>('service')})
+                    return defer({listResponse: loadResourceList<Service[]>(businessId, 'service')})
                 }
             },
             {path: 'add', element: <AddContract/>},
             {
                 path: ':id/edit', element: <EditServicePage/>,
                 loader: async ({ params }) => {
-                    return defer({itemResponse: loadResource<Service>('service', params.id as string)})
+                    return defer({itemResponse: loadResource<Service>(businessId, 'service', params.id as string)})
                 },
                 handle: {
                     crumb: () => "edit"
@@ -41,8 +43,8 @@ const ServiceRoutes = (): RouteObject => {
                 path: ':id', element: <ViewServicePage/>,
                 loader: async ({ params}) => {
                     const id = params.id as string
-                    const contractLoader = loadResource<Service>('service', id)
-                    const timesheetsLoader = loadResourceList<Contract[]>(`service/${id}/contract`);
+                    const contractLoader = loadResource<Service>(businessId, 'service', id)
+                    const timesheetsLoader = loadResourceList<Contract[]>(businessId, `service/${id}/contract`);
                     return defer({id, itemResponse: contractLoader, listResponse: timesheetsLoader});
                 },
                 handle: {

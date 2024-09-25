@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import './App.css';
 import {createBrowserRouter, defer, RouterProvider} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
@@ -15,15 +15,14 @@ import AccountRoutes from "./routes/AccountRoutes";
 import SettingsRoutes from "./routes/SettingsRoutes";
 import ReportRoutes from "./routes/ReportRoutes";
 import {useAuth} from "react-oidc-context";
+import {loadResourceList} from "./Constants";
 
-const loadResourceList = async <T,>(resource: string) => {
-    console.log(`${resource} List Loader`)
-    return MonetaApi.list<T>(resource)
-}
-
+export const BusinessContext = createContext<string>('')
 function App() {
 
     const auth =useAuth()
+    const [businessId, setBusinessId] = useState<string>("02f5d1bf-da50-4ca4-9bd9-e47e10f6e765")
+
     const router = createBrowserRouter([
         {
             element: <ProtectedRoute/>,
@@ -34,10 +33,10 @@ function App() {
             errorElement: <OutletContentError/>,
             children: [
                 {
-                    index: true, element: <Dashboard />,
-                    loader: async () => {
-                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
-                    },
+                    index: true, element: <h1>HELLO</h1>,
+                    // loader: async () => {
+                    //     return defer({listResponse: loadResourceList<Timesheet[]>(businessId, 'timesheet')})
+                    // },
                     handle: {
                         crumb: () => "dashboard"
                     }
@@ -45,7 +44,7 @@ function App() {
                 {
                     path: 'dashboard', element: <Dashboard/>,
                     loader: async () => {
-                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                        return defer({listResponse: loadResourceList<Timesheet[]>(businessId, 'timesheet')})
                     },
                     handle: {
                         crumb: () => "dashboard"
@@ -87,7 +86,9 @@ function App() {
             //     Hello {auth.user?.profile.sub}{" "}
             //     <button onClick={() => void auth.removeUser()}>Log out</button>
             // </div>
-            <RouterProvider router={router} />
+            <BusinessContext.Provider value={businessId}>
+                <RouterProvider router={router} />
+            </BusinessContext.Provider>
         );
     }
 

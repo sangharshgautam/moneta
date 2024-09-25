@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Dropdown, Form, FormField,} from 'semantic-ui-react'
 import MonetaApi from "../../../services/MonetaApi";
 import {Agency, NewContract} from "../common/Models";
+import {BusinessContext} from "../../../App";
 
 
 const ContractForm = <T extends NewContract>(props: {contract: T, handleSubmit: (contractForm: T) => void, handleCancel: () => void}) => {
@@ -9,9 +10,9 @@ const ContractForm = <T extends NewContract>(props: {contract: T, handleSubmit: 
     const [record, setRecord] = useState<T>(props.contract)
 
     const [agencies, setAgencies] = useState<Agency[]>([])
-
+    const businessId = useContext(BusinessContext);
     useEffect(() => {
-        MonetaApi.list<Agency[]>('agency', setProgress).then(
+        MonetaApi.list<Agency[]>(businessId, 'agency', setProgress).then(
             result => setAgencies(result.data)
         )
     }, [])

@@ -12,6 +12,9 @@ monetaClient.interceptors.request.use((config) => {
     config.headers.set('Authorization',  `Bearer ${accessToken}`)
     return config
 })
+// monetaClient.interceptors.response.use((response) => {
+//     return response
+// })
 
 const execute = <T>(method: string, url: string, onProgress?: (value: number) => void, data?: T): Promise<AxiosResponse<T>> => {
 
@@ -32,8 +35,8 @@ const execute = <T>(method: string, url: string, onProgress?: (value: number) =>
     })
 }
 const MonetaApi = {
-    list: <T>(resource: string, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
-        return execute('GET', `/${resource}`,  onProgress)
+    list: <T>(businessId: string, resource: string, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
+        return execute('GET', `/02f5d1bf-da50-4ca4-9bd9-e47e10f6e765/${resource}`,  onProgress)
     },
     search: <T>(resource: string,  criteria: any, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
         return execute('POST', `/${resource}`,  onProgress, criteria)
@@ -44,8 +47,8 @@ const MonetaApi = {
     save: <T extends Identifier>(resource: string, entity: T, onProgress?: (value: number) => void): Promise<AxiosResponse<T>> => {
         return execute('PUT', `/${resource}/${entity.id}`, onProgress, entity)
     },
-    get: <T>(resource: string, id: string | number, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
-        return execute('GET', `/${resource}/${id}`,  onProgress)
+    get: <T>(businessId: string, resource: string, id: string | number, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
+        return execute('GET', `/02f5d1bf-da50-4ca4-9bd9-e47e10f6e765/${resource}/${id}`,  onProgress)
     },
     delete: <T>(resource: string, id: string | number, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
         return execute('DELETE', `/${resource}/${id}`,  onProgress)

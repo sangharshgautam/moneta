@@ -27,7 +27,7 @@ const Reports = (props: {records: Account[]}) => {
         }
     }
     return  <Segment basic>
-        <Header as='h3'>Reports</Header>
+        <Header as='h3'>Reports - Accounts</Header>
         <Table celled>
             <TableHeader>
                 <TableRow>
@@ -39,16 +39,16 @@ const Reports = (props: {records: Account[]}) => {
             </TableHeader>
 
             <TableBody>
-                {props.records.map(record =>
-                    <TableRow key={record.id}>
+                {props.records.map(account =>
+                    <TableRow key={account.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/report/${record.id}`}>{record.id}</NavLink>
+                            <NavLink to={`/report/${account.id}`}>{account.id}</NavLink>
                         </TableCell>
-                        <TableCell key="name">{record.name}</TableCell>
-                        <TableCell key="balance">£ {record.balance}</TableCell>
+                        <TableCell key="name">{account.name}</TableCell>
+                        <TableCell key="balance">£ {account.balance}</TableCell>
                         <TableCell key="action">
-                            <Button as={NavLink} to={`/report/${record.id}/edit`} size='small' positive icon="edit"></Button>
-                            <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
+                            <Button as={NavLink} to={`/report/${account.id}/edit`} size='small' positive icon="edit"></Button>
+                            <Button size='small' negative icon="trash" onClick={() => handleDelete(account.id)}></Button>
                         </TableCell>
                     </TableRow>
                     )

@@ -6,8 +6,11 @@ import EditAgencyPage from "../pages/agency/EditAgencyPage";
 import AddContract from "../components/modules/contract/AddContract";
 import ViewAgencyPage from "../pages/agency/ViewAgencyPage";
 import {loadResource, loadResourceList} from "../Constants";
+import {useContext} from "react";
+import {BusinessContext} from "../App";
 
 const AgencyRoutes = (): RouteObject => {
+    const businessId = useContext(BusinessContext);
     return {
         path: 'agency',
         handle: {
@@ -17,7 +20,7 @@ const AgencyRoutes = (): RouteObject => {
             {
                 index: true, element: <AgenciesPage/>,
                 loader: async () =>  {
-                    return defer({listResponse: loadResourceList<Agency[]>('agency')})
+                    return defer({listResponse: loadResourceList<Agency[]>(businessId, 'agency')})
                 }
             },
             {
@@ -30,7 +33,7 @@ const AgencyRoutes = (): RouteObject => {
                 path: ':id/edit', element: <EditAgencyPage/>,
                 // @ts-ignore
                 loader: async ({ params }) => {
-                    return defer({itemResponse: loadResource<Agency>('agency', params.id as string)})
+                    return defer({itemResponse: loadResource<Agency>(businessId, 'agency', params.id as string)})
                 },
                 handle: {
                     crumb: () => "edit"
@@ -43,8 +46,8 @@ const AgencyRoutes = (): RouteObject => {
                 // @ts-ignore
                 loader: async ({ params }) => {
                     const id = params.id as string
-                    const agencyLoader = loadResource<Agency>('agency', id)
-                    const contractsLoader = loadResourceList<Contract[]>(`agency/${id}/contract`);
+                    const agencyLoader = loadResource<Agency>(businessId, 'agency', id)
+                    const contractsLoader = loadResourceList<Contract[]>(businessId, `agency/${id}/contract`);
                     return defer({id, itemResponse: agencyLoader, listResponse: contractsLoader});
                 },
                 handle: {

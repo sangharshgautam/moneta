@@ -14,11 +14,10 @@ export const getUser = () => {
 }
 
 
-export const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
-    return MonetaApi.get<T>(resource, id)
+export const loadResource = async <T,>(businessId: string, resource: string, id: string | number): Promise<AxiosResponse<T>> => {
+    return MonetaApi.get<T>(businessId, resource, id)
 }
-
-export const loadResourceList = async <T,>(resource: string) => {
+export const loadResourceList = async <T,>(businessId: string, resource: string) => {
     console.log(`${resource} List Loader`)
-    return MonetaApi.list<T>(resource)
+    return MonetaApi.list<T>(businessId, resource)
 }

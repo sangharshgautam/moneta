@@ -7,11 +7,12 @@ import EditContractPage from "../pages/contract/EditContractPage";
 import AddTimesheet from "../components/modules/timesheet/AddTimesheet";
 import AssignService from "../pages/contract/AssignService";
 import AddInvoice from "../pages/invoice/AddInvoice";
-import React from "react";
+import React, {useContext} from "react";
 import {loadResource, loadResourceList} from "../Constants";
+import {BusinessContext} from "../App";
 
 const ContractRoutes = (): RouteObject => {
-
+    const businessId = useContext(BusinessContext);
     return {
         path: 'contract',
         handle: {
@@ -21,7 +22,7 @@ const ContractRoutes = (): RouteObject => {
             {
                 index: true, element: <ContractsPage/>,
                 loader: async () => {
-                    return defer({listResponse: loadResourceList<Contract[]>('contract')})
+                    return defer({listResponse: loadResourceList<Contract[]>(businessId, 'contract')})
                 }
             },
             {path: 'add', element: <AddContract/>},
@@ -31,10 +32,10 @@ const ContractRoutes = (): RouteObject => {
                 // @ts-ignore
                 loader: async ({params}) => {
                     const id = params.id as string
-                    const contractLoader = loadResource<Contract>('contract', id)
-                    const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
-                    const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
-                    const invoicesLoader = loadResourceList<Invoice[]>(`contract/${id}/invoice`);
+                    const contractLoader = loadResource<Contract>(businessId, 'contract', id)
+                    const timesheetsLoader = loadResourceList<Timesheet[]>(businessId, `contract/${id}/timesheet`);
+                    const servicesLoader = loadResourceList<ContractService[]>(businessId, `contract/${id}/service`);
+                    const invoicesLoader = loadResourceList<Invoice[]>(businessId, `contract/${id}/invoice`);
                     return defer({id, itemResponse: contractLoader, listResponse: timesheetsLoader, servicesResponse: servicesLoader, invoices: invoicesLoader});
                 },
                 handle: {
@@ -45,7 +46,7 @@ const ContractRoutes = (): RouteObject => {
                 path: ':id/edit', element: <EditContractPage/>,
                 // @ts-ignore
                 loader: async ({ params }) => {
-                    return defer({itemResponse: loadResource<Agency>('contract', params.id as string)})
+                    return defer({itemResponse: loadResource<Agency>(businessId, 'contract', params.id as string)})
                 },
                 handle: {
                     crumb: () => "edit"
@@ -56,10 +57,10 @@ const ContractRoutes = (): RouteObject => {
                 // @ts-ignore
                 loader: async ({ params}) => {
                     const id = params.id as string
-                    const contractLoader = loadResource<Contract>('contract', id)
-                    const contractsLoader = loadResourceList<Contract[]>(`contract`);
-                    const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
-                    const invoicesLoader = loadResourceList<Invoice[]>(`contract/${id}/invoice`);
+                    const contractLoader = loadResource<Contract>(businessId, 'contract', id)
+                    const contractsLoader = loadResourceList<Contract[]>(businessId, `contract`);
+                    const servicesLoader = loadResourceList<ContractService[]>(businessId, `contract/${id}/service`);
+                    const invoicesLoader = loadResourceList<Invoice[]>(businessId, `contract/${id}/invoice`);
                     return defer({id, itemResponse: contractLoader, contractsResponse: contractsLoader, servicesResponse: servicesLoader, invoices: invoicesLoader});
                 },
                 handle: {
@@ -71,8 +72,8 @@ const ContractRoutes = (): RouteObject => {
                 // @ts-ignore
                 loader: async ({ params }) => {
                     const id = params.id as string
-                    const contractLoader = loadResource<Contract>('contract', id)
-                    const servicesLoader = loadResourceList<Contract[]>(`service`);
+                    const contractLoader = loadResource<Contract>(businessId, 'contract', id)
+                    const servicesLoader = loadResourceList<Contract[]>(businessId, `service`);
                     return defer({id, itemResponse: contractLoader, listResponse: servicesLoader})
                 },
                 handle: {
@@ -84,8 +85,8 @@ const ContractRoutes = (): RouteObject => {
                 // @ts-ignore
                 loader: async ({ params}) => {
                     const id = params.id as string
-                    const contractLoader = loadResource<Contract>('contract', id)
-                    const servicesLoader = loadResourceList<ContractService[]>(`contract/${id}/service`);
+                    const contractLoader = loadResource<Contract>(businessId, 'contract', id)
+                    const servicesLoader = loadResourceList<ContractService[]>(businessId, `contract/${id}/service`);
                     return defer({id, contractLoader, servicesLoader});
                 },
                 handle: {

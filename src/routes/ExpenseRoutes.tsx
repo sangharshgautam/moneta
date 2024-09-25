@@ -3,10 +3,12 @@ import {defer, RouteObject} from "react-router-dom";
 import {Contract, Expense} from "../components/modules/common/Models";
 import AddContract from "../components/modules/contract/AddContract";
 import {loadResource, loadResourceList} from "../Constants";
-import React from "react";
+import React, {useContext} from "react";
 import ViewInvoice from "../pages/invoice/ViewInvoice";
+import {BusinessContext} from "../App";
 
 const ExpenseRoutes = (): RouteObject => {
+    const businessId = useContext(BusinessContext);
     return {
         path: 'expense',
         handle: {
@@ -16,7 +18,7 @@ const ExpenseRoutes = (): RouteObject => {
             {
                 index: true, element: <ExpensesPage/>,
                 loader: async () => {
-                    return defer({listResponse: loadResourceList<Expense[]>('expense')})
+                    return defer({listResponse: loadResourceList<Expense[]>(businessId, 'expense')})
                 }
             },
             {path: 'add', element: <AddContract/>},
@@ -25,7 +27,7 @@ const ExpenseRoutes = (): RouteObject => {
                 path: ':id', element: <ViewInvoice/>,
                 loader: async ({params}) => {
                     const id = params.id as string
-                    const invoiceLoader = loadResource<Contract>('invoice', id)
+                    const invoiceLoader = loadResource<Contract>(businessId, 'invoice', id)
                     return defer({
                         id,
                         itemResponse: invoiceLoader

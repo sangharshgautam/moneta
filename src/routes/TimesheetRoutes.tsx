@@ -2,12 +2,14 @@ import {TimesheetsPage} from "../pages/LazyOutlet";
 import {defer, RouteObject} from "react-router-dom";
 import {Agency, Contract, Timesheet} from "../components/modules/common/Models";
 import {loadResource, loadResourceList} from "../Constants";
-import React from "react";
+import React, {useContext} from "react";
 import AddTimesheet from "../components/modules/timesheet/AddTimesheet";
 import EditTimesheetPage from "../pages/timesheet/EditTimesheetPage";
 import ViewTimesheetPage from "../pages/timesheet/ViewTimesheetPage";
+import {BusinessContext} from "../App";
 
 const TimesheetRoutes = (): RouteObject => {
+    const businessId = useContext(BusinessContext);
     return {
         path: 'timesheet',
         handle: {
@@ -17,7 +19,7 @@ const TimesheetRoutes = (): RouteObject => {
             {
                 index: true, element: <TimesheetsPage />,
                 loader: async () => {
-                    return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                    return defer({listResponse: loadResourceList<Timesheet[]>(businessId, 'timesheet')})
                 }
             },
             {
@@ -29,14 +31,14 @@ const TimesheetRoutes = (): RouteObject => {
             {
                 path: ':id/edit', element: <EditTimesheetPage/>,
                 loader: async ({ params }) => {
-                    return defer({itemResponse: loadResource<Agency>('timesheet', params.id as string)})
+                    return defer({itemResponse: loadResource<Agency>(businessId, 'timesheet', params.id as string)})
                 }
             },
             {
                 path: ':id', element: <ViewTimesheetPage/>,
                 loader: async ({ params}) => {
                     const id = params.id as string
-                    const timesheetLoader = loadResource<Contract>('timesheet', id)
+                    const timesheetLoader = loadResource<Contract>(businessId, 'timesheet', id)
                     return defer({id, itemResponse: timesheetLoader});
                 },
                 handle: {

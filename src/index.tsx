@@ -15,7 +15,8 @@ const root = ReactDOM.createRoot(
 const googleOidcConfig: AuthProviderProps = {
     authority: AUTHORITY,
     client_id: CLIENT_ID,
-    redirect_uri: process.env.REACT_APP_MONETA_API_BASE_URL || 'https://sangharshgautam.github.io/moneta/',
+    redirect_uri: "http://localhost:3000/moneta",
+    client_secret: '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',
     userStore: new WebStorageStateStore({ store: window.localStorage }),
     scope: [
         "openid",

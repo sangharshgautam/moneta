@@ -31,8 +31,10 @@ const Invoices = (props: {records: Invoice[]}) => {
         <Table celled>
             <TableHeader>
                 <TableRow>
+                    <TableHeaderCell>Id</TableHeaderCell>
                     <TableHeaderCell>RefId</TableHeaderCell>
                     <TableHeaderCell>Date</TableHeaderCell>
+                    <TableHeaderCell>Number</TableHeaderCell>
                     {/*<TableHeaderCell>Contract</TableHeaderCell>*/}
 
                     <TableHeaderCell>Start</TableHeaderCell>
@@ -47,10 +49,13 @@ const Invoices = (props: {records: Invoice[]}) => {
             </TableHeader>
 
             <TableBody>
-                {props.records.map(record =>
+                {props.records.sort((r1, r2) => new Date(r2.date).getTime() - new Date(r1.date).getTime()).map(record =>
                     <TableRow key={record.id}>
+                        <TableCell key="id">
+                            <NavLink to={`/invoice/${record.refId}`}>{record.id}</NavLink>
+                        </TableCell>
                         <TableCell key="refId">
-                            <NavLink to={`/invoice/${record.id}`}>{record.refId}</NavLink>
+                            <NavLink to={`/invoice/${record.refId}`}>{record.refId}</NavLink>
                         </TableCell>
                         {/*<TableCell key="service">*/}
                         {/*    <NavLink to={`/agency/${record.contractService.contract.agency.id}`}>{record.contractService.contract.agency.name}</NavLink>*/}
@@ -59,6 +64,7 @@ const Invoices = (props: {records: Invoice[]}) => {
                         {/*    <NavLink to={`/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
                         {/*</TableCell>*/}
                         <TableCell key="date">{record.date}</TableCell>
+                        <TableCell key="invoiceNumber">{record.number}</TableCell>
                         <TableCell key="startDate">{record.startDate}</TableCell>
                         <TableCell key="endDate">{record.endDate}</TableCell>
 

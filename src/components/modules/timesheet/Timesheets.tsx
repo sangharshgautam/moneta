@@ -34,7 +34,7 @@ const Timesheets = (props: {records: Timesheet[]}) => {
                     <TableHeaderCell>RefId</TableHeaderCell>
                     <TableHeaderCell>Agency</TableHeaderCell>
                     <TableHeaderCell>Contract</TableHeaderCell>
-
+                    <TableHeaderCell>Invoice</TableHeaderCell>
                     <TableHeaderCell>Start</TableHeaderCell>
                     <TableHeaderCell>End</TableHeaderCell>
                     <TableHeaderCell>Days</TableHeaderCell>
@@ -56,6 +56,9 @@ const Timesheets = (props: {records: Timesheet[]}) => {
                         </TableCell>
                         <TableCell key="contractId">
                             <NavLink to={`/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>
+                        </TableCell>
+                        <TableCell>
+                            <NavLink to={`/invoice/${record.invoiceId}`}>{record.invoiceId}</NavLink>
                         </TableCell>
                         <TableCell key="startDate">{record.startDate}</TableCell>
                         <TableCell key="endDate">{record.endDate}</TableCell>

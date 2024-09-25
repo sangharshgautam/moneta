@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Await, useLoaderData} from "react-router-dom";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import ViewItemSection from "../ViewItemSection";
@@ -11,6 +11,7 @@ import VATReportView from "./VATReportView";
 import CorpTaxReportView from "./CorpTaxReportView";
 import TxnChart from "./TxnChart";
 import {TxnSearchFilters} from "./TxnSearchFilters";
+import {BusinessContext} from "../../App";
 
 const ViewReport = () => {
     const [account, setAccount] = useState<Account>()
@@ -21,17 +22,21 @@ const ViewReport = () => {
         openingBalance: 0,
         closingBalance: 0
     })
+    const businessId = useContext(BusinessContext);
     const txnFilters = {
         startDate: "2020-04-01",
         endDate: "2021-03-31"
     }
-    const handleSubmit = useCallback((txnFilters: TxnSearchFilters) => {
+    const handleSubmit = (txnFilters: TxnSearchFilters) => {
         if(account){
-            MonetaApi.search<Report>(`report/account/${account.id}/transaction`, txnFilters).then(
+            MonetaApi.search<Report>(`${businessId}/report/account/${account.id}/transaction`, txnFilters).then(
                 result => setReport(result.data)
             )
         }
-    }, [account]);
+    };
+    useEffect(() => {
+        handleSubmit(txnFilters);
+    }, [account])
     // @ts-ignore
     useLoaderData().itemResponse.then(resp => setAccount(resp.data));
     const panes = [

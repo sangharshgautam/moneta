@@ -33,7 +33,7 @@ const InvoiceItems = (props: {records: InvoiceItem[]}) => {
                 <TableRow>
                     <TableHeaderCell>Service</TableHeaderCell>
                     <TableHeaderCell>Contract</TableHeaderCell>
-                    <TableHeaderCell>Rate</TableHeaderCell>
+                    <TableHeaderCell>Price</TableHeaderCell>
                     <TableHeaderCell>Days</TableHeaderCell>
                     <TableHeaderCell>Amount</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
@@ -44,14 +44,14 @@ const InvoiceItems = (props: {records: InvoiceItem[]}) => {
                 {props.records.map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="service">
-                            <NavLink to={`/service/${record.contractService.service.id}`}>{record.contractService.service.name}</NavLink>
+                            <NavLink to={`/service/${record.product.id}`}>{record.product.id}</NavLink>
                         </TableCell>
                         <TableCell key="contract">
-                            <NavLink to={`/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>
+                            {/*<NavLink to={`/contract/${record.contractService.contract.id}`}>{record.contractService.contract.refId}</NavLink>*/}
                         </TableCell>
-                        <TableCell key="rate">{record.contractService.rate}</TableCell>
-                        <TableCell key="days">{record.days}</TableCell>
-                        <TableCell key="status">£ {record.amount}</TableCell>
+                        <TableCell key="rate">{record.price}</TableCell>
+                        <TableCell key="days">{record.quantity}</TableCell>
+                        <TableCell key="status">£ {record.total}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/invoice-item/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
