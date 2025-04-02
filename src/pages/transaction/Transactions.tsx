@@ -11,7 +11,7 @@ import {
     TableHeaderCell,
     TableRow
 } from "semantic-ui-react";
-import React from "react";
+import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Transaction} from "../../components/modules/common/Models";
 import MonetaApi from "../../services/MonetaApi";
@@ -29,6 +29,7 @@ const Transactions = (props: {openingBalance?: number, closingBalance?: number, 
     const getAmount = (type: string, record: Transaction) => {
         return record.type === type ? '£ '+record.amount: '';
     }
+    let balance = 0
     return  <Segment basic>
         <Header as='h3'>Transactions</Header>
         <Table celled striped>
@@ -50,14 +51,14 @@ const Transactions = (props: {openingBalance?: number, closingBalance?: number, 
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    <TableCell>OPENING BALANCE</TableCell>
+                    <TableCell>CLOSING BALANCE</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    <TableCell>{props.openingBalance}</TableCell>
+                    <TableCell>{props.closingBalance}</TableCell>
                     <TableBody></TableBody>
                     <TableBody></TableBody>
                 </TableRow>
-                {props.records.map(record =>
+                {props.records.sort((t1, t2) => new Date(t1.date).getTime() - new Date(t2.date).getTime()).map(record => {balance = record.type == 'DEPOSIT' ?  balance + record.amount : balance - record.amount; record.balance = balance; return record}).map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
                             <NavLink to={`/transaction/${record.id}`}>{record.id}</NavLink>
@@ -65,8 +66,8 @@ const Transactions = (props: {openingBalance?: number, closingBalance?: number, 
                         <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="category">{record.category}</TableCell>
                         <TableCell key="description">{record.description}</TableCell>
-                        <TableCell key="in">{getAmount('IN', record)}</TableCell>
-                        <TableCell key="out">{getAmount('OUT', record)}</TableCell>
+                        <TableCell key="in">{getAmount('DEPOSIT', record)}</TableCell>
+                        <TableCell key="out">{getAmount('WITHDRAWAL', record)}</TableCell>
                         <TableCell key="amount">£ {record.balance}</TableCell>
                         <TableCell key="action">
                             <Button as={NavLink} to={`/transaction/${record.id}/edit`} size='small' positive icon="edit"></Button>
@@ -79,10 +80,10 @@ const Transactions = (props: {openingBalance?: number, closingBalance?: number, 
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    <TableCell>CLOSING BALANCE</TableCell>
+                    <TableCell>OPENING BALANCE</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
-                    <TableCell>{props.closingBalance}</TableCell>
+                    <TableCell>{props.openingBalance}</TableCell>
                     <TableCell></TableCell>
                 </TableRow>
             </TableBody>

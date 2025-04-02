@@ -32,7 +32,7 @@ const AccountRoutes = (): RouteObject => {
                     return defer({
                         id,
                         itemResponse: accountLoader,
-                        transactionsLoader
+                        transactions: transactionsLoader
                     });
                 },
                 handle: {

@@ -44,6 +44,7 @@ export interface SalarySlip {
 }
 export interface Timesheet extends NewTimesheet{
     id:number|string
+    total: number
     invoiceId: string
     contractService: ContractService
     salarySlip: SalarySlip
@@ -112,8 +113,8 @@ export interface Transaction {
     description: string
     category: string
     type: string
-    amount: string
-    balance: string
+    amount: number
+    balance: number
     approved: boolean
 }
 export interface Account {
@@ -136,6 +137,7 @@ export interface VATReport {
     revenue: number
     calculatedVAT: number
     paidVAT: number
+    penalty: number
     vatDue: number
 }
 export interface ExpenseDTO {
@@ -176,4 +178,7 @@ export interface CorpTaxReport {
     taxOpeningBalance: number
     taxClosingBalance: number
 
+}
+export interface ReconcileTimesheet extends Timesheet {
+    invoiced: number
 }

@@ -69,8 +69,8 @@ const TxnReport = (props: {report: Report}) => {
                         <TableCell key="date">{record.date}</TableCell>
                         <TableCell key="category">{record.category}</TableCell>
                         <TableCell key="description">{record.description}</TableCell>
-                        <TableCell key="in">{getAmount('IN', record)}</TableCell>
-                        <TableCell key="out">{getAmount('OUT', record)}</TableCell>
+                        <TableCell key="in">{getAmount('DEPOSIT', record)}</TableCell>
+                        <TableCell key="out">{getAmount('WITHDRAWAL', record)}</TableCell>
                         <TableCell>
                             {approved(record)}
                         </TableCell>

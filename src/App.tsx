@@ -16,6 +16,7 @@ import SettingsRoutes from "./routes/SettingsRoutes";
 import ReportRoutes from "./routes/ReportRoutes";
 import {useAuth} from "react-oidc-context";
 import {loadResourceList} from "./Constants";
+import ReconcileRoutes from "./routes/ReconcileRoutes";
 
 export const BusinessContext = createContext<string>('')
 function App() {
@@ -58,6 +59,7 @@ function App() {
                 ExpenseRoutes(),
                 AccountRoutes(),
                 ReportRoutes(),
+                ReconcileRoutes(),
                 SettingsRoutes()
             ]
         }

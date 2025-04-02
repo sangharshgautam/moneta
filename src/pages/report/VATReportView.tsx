@@ -19,6 +19,7 @@ const VATReportView = (props: {report: Report}) => {
                     <TableHeaderCell>Sales</TableHeaderCell>
                     <TableHeaderCell>VAT Calculated</TableHeaderCell>
                     <TableHeaderCell>VAT Paid</TableHeaderCell>
+                    <TableHeaderCell>VAT Penalty</TableHeaderCell>
                     <TableHeaderCell>VAT Due (rounded)</TableHeaderCell>
                 </TableRow>
             </TableHeader>
@@ -29,6 +30,7 @@ const VATReportView = (props: {report: Report}) => {
                         <TableCell>£ {quarterReport.revenue}</TableCell>
                         <TableCell>£ {quarterReport.calculatedVAT}</TableCell>
                         <TableCell>£ {quarterReport.paidVAT}</TableCell>
+                        <TableCell>£ {quarterReport.penalty}</TableCell>
                         <TableCell>£ {quarterReport.vatDue}</TableCell>
                     </TableRow>
                 )}
